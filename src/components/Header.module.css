@@ -1,0 +1,90 @@
+.mediumLengthHero {
+  align-self: stretch;
+  position: relative;
+  line-height: 120%;
+}
+.loremIpsumDolor {
+  align-self: stretch;
+  position: relative;
+  font-size: var(--text-medium-normal-size);
+  line-height: 150%;
+}
+.content {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-5xl);
+}
+.button1 {
+  position: relative;
+  line-height: 150%;
+}
+.button {
+  border-radius: var(--br-5xl);
+  background-color: var(--licorice);
+  border: 1px solid var(--border-primary);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-5xl);
+  cursor: pointer;
+}
+.button2 {
+  border-radius: var(--br-5xl);
+  border: 1px solid var(--mint-cream);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-5xl);
+  cursor: pointer;
+}
+.actions {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-base) 0px 0px;
+  gap: var(--gap-base);
+  font-size: var(--text-regular-semi-bold-size);
+}
+.column {
+  flex: 1;
+  height: 564px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-5xl);
+  min-width: 320px;
+}
+.frameSquare800x800Icon {
+  width: 564px;
+  position: relative;
+  height: 680px;
+  overflow: hidden;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+.header5 {
+  align-self: stretch;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-11xl) var(--padding-45xl);
+  background-image: url("/public/breakpoint--desktop@3x.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  text-align: left;
+  font-size: var(--heading-desktop-h1-size);
+  color: var(--background-color-primary);
+  font-family: var(--text-regular-semi-bold);
+}
