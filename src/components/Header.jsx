@@ -1,0 +1,53 @@
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+import styles from "./Header.module.css";
+
+const Header = ({ className = "" }) => {
+  const navigate = useNavigate();
+
+  const onButtonClick = useCallback(() => {
+    navigate("/");
+  }, [navigate]);
+
+  const onButton1Click = useCallback(() => {
+    navigate("/about-us");
+  }, [navigate]);
+
+  return (
+    <section className={[styles.header5, className].join(" ")}>
+      <div className={styles.column}>
+        <div className={styles.content}>
+          <h1 className={styles.mediumLengthHero}>
+            Empowering you to detect harmful substances.
+          </h1>
+          <div className={styles.loremIpsumDolor}>
+            Our online software, powered by Google Lens, scans text to identify
+            substances associated with carcinogens and birth defects, keeping
+            you and your loved ones safe.
+          </div>
+        </div>
+        <div className={styles.actions}>
+          <button className={styles.button} onClick={onButtonClick}>
+            <div className={styles.button1}>Get Started</div>
+          </button>
+          <button className={styles.button2} onClick={onButton1Click}>
+            <div className={styles.button1}>Learn More</div>
+          </button>
+        </div>
+      </div>
+      <img
+        className={styles.squareIcon}
+        loading="lazy"
+        alt=""
+        src="/framesquare800x800@2x.png"
+      />
+    </section>
+  );
+};
+
+Header.propTypes = {
+  className: PropTypes.string,
+};
+
+export default Header;

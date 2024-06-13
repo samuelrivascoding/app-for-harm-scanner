@@ -1,0 +1,41 @@
+.arcticonsopenaiChatgpt {
+  height: 36px;
+  width: 36px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.arcticonsopenaiChatgptWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0px var(--padding-xs);
+}
+.chatgpt1 {
+  position: relative;
+  font-size: var(--font-size-sm);
+  line-height: 160%;
+  font-weight: 500;
+  font-family: var(--font-inter);
+  color: var(--licorice);
+  text-align: left;
+  display: inline-block;
+  min-width: 61px;
+}
+.imagewithtext4 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.chatgpt {
+  cursor: pointer;
+  border: none;
+  padding: var(--padding-4xs) var(--padding-5xl);
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}

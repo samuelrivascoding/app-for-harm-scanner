@@ -1,0 +1,8 @@
+.gallery {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-4xs) var(--padding-5xl);
+  cursor: pointer;
+}

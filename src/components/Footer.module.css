@@ -1,0 +1,121 @@
+.harmscanner {
+  position: relative;
+  line-height: 150%;
+  display: inline-block;
+  mix-blend-mode: normal;
+  min-width: 100px;
+}
+.companylogo {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0px var(--padding-10xs) 0px 0px;
+  cursor: pointer;
+}
+.logo {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-width: 103px;
+  max-width: 100%;
+}
+.getStarted {
+  position: relative;
+  line-height: 150%;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 83px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.links {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-11xl);
+  color: var(--border-primary);
+  font-family: var(--text-regular-semi-bold);
+}
+.content3 {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--gap-13xl);
+  max-width: 100%;
+}
+.divider {
+  align-self: stretch;
+  flex: 1;
+  position: relative;
+  background-color: var(--border-primary);
+  border: 1px solid var(--border-primary);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.credits {
+  align-self: stretch;
+  height: 1px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  max-width: 100%;
+}
+.footer4 {
+  align-self: stretch;
+  background-color: var(--background-color-primary);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-61xl) var(--padding-45xl);
+  box-sizing: border-box;
+  gap: var(--gap-61xl);
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--text-regular-semi-bold-size);
+  color: var(--companycolor);
+  font-family: var(--companylogostyle);
+}
+
+@media screen and (max-width: 900px) {
+  .content3 {
+    gap: var(--gap-base);
+  }
+
+  .credits {
+    gap: var(--gap-base);
+  }
+
+  .footer4 {
+    gap: var(--gap-21xl);
+    padding-left: var(--padding-13xl);
+    padding-right: var(--padding-13xl);
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 700px) {
+  .footer4 {
+    gap: var(--gap-xl);
+  }
+}
+@media screen and (max-width: 450px) {
+  .content3 {
+    gap: var(--gap-base);
+  }
+
+  .credits {
+    gap: var(--gap-base);
+  }
+}

@@ -1,0 +1,37 @@
+.harmScanner {
+  position: relative;
+  line-height: 150%;
+  display: inline-block;
+  mix-blend-mode: normal;
+  min-width: 100px;
+  white-space: nowrap;
+}
+.companyLogo {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0px var(--padding-10xs) 0px 0px;
+  cursor: pointer;
+}
+.navbar8 {
+  align-self: stretch;
+  background-color: var(--background-color-primary);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--padding-5xl) var(--padding-xl);
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--text-regular-semi-bold-size);
+  color: var(--companycolor);
+  font-family: var(--companylogostyle);
+}
