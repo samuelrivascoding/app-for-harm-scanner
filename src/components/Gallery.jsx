@@ -1,9 +1,11 @@
-import { useCallback } from "react";
+import {useRef, useCallback } from "react";
 import PropTypes from "prop-types";
 import styles from "./Gallery.module.css";
 
 const Gallery = ({ className = '', notPressed, onPhotoUpload }) => {
-  const onGalleryClick = useCallback((event) => {
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = useCallback((event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -14,13 +16,38 @@ const Gallery = ({ className = '', notPressed, onPhotoUpload }) => {
     }
   }, [onPhotoUpload]);
 
+  const handleLabelClick = () => {
+    event.preventDefault(); // Prevent default label behavior
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   return (
     notPressed && (
-      <input
-        className={[styles.gallery, className].join(" ")}
-        type="file"
-        onClick={onGalleryClick}
-      />
+      <div className={[styles.gallery, className].join(" ")}>
+        <label className={styles.label} onClick={handleLabelClick}>
+          <div className={styles.imagewithtext}>
+            <div className={styles.optionIcon}>
+              <img
+                className={styles.galleryPreviewIcon}
+                loading="lazy"
+                alt="Upload Photo"
+                src="/frame.svg"
+              />
+            </div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              id="file-upload"
+              className={styles.input}
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+            />
+            <div className={styles.gallery1}>Gallery</div>
+          </div>
+        </label>
+      </div>
     )
   );
 };

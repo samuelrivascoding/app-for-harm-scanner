@@ -1,0 +1,8 @@
+.textidentified {
+  position: relative;
+  font-size: var(--text-medium-normal-size);
+  line-height: 150%;
+  font-family: var(--text-regular-semi-bold);
+  color: var(--mint-cream);
+  text-align: left;
+}

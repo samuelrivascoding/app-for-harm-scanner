@@ -1,3 +1,36 @@
+.galleryPreviewIcon {
+  height: 36px;
+  width: 36px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.optionIcon {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 var(--padding-7xs);
+}
+.gallery1 {
+  position: relative;
+  line-height: 160%;
+  font-weight: 500;
+  display: inline-block;
+  min-width: 48px;
+}
+.imagewithtext {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.label {
+  cursor: pointer;
+}
+.input {
+  display: none;
+}
 .gallery {
   display: flex;
   flex-direction: row;
@@ -5,4 +38,8 @@
   justify-content: flex-start;
   padding: var(--padding-4xs) var(--padding-5xl);
   cursor: pointer;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: var(--licorice);
+  font-family: var(--font-inter);
 }
