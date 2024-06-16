@@ -2,13 +2,13 @@ import { useCallback } from "react";
 import PropTypes from "prop-types";
 import styles from "./ChatGPT.module.css";
 
-const ChatGPT = ({ className = "", notPressed }) => {
+const ChatGPT = ({ className = "", noPhoto }) => {
   const onChatGPTClick = useCallback(() => {
     //TODO: hide initially, once gallery or takePhoto pressed, use this button to process selected text and change gpt/ ingredient text
   }, []);
 
   return (
-    !notPressed && (
+    !noPhoto && (
       <button
         className={[styles.chatgpt, className].join(" ")}
         onClick={onChatGPTClick}
@@ -31,7 +31,7 @@ const ChatGPT = ({ className = "", notPressed }) => {
 
 ChatGPT.propTypes = {
   className: PropTypes.string,
-  notPressed: PropTypes.bool,
+  noPhoto: PropTypes.bool,
 };
 
 export default ChatGPT;

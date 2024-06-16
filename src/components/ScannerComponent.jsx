@@ -1,4 +1,4 @@
-import React, {useCallback, useState } from 'react';
+import React, {useCallback, useEffect, useState } from 'react';
 import Camera from "./Camera";
 import Gallery from "./Gallery";
 import TakePhoto from "./TakePhoto";
@@ -7,49 +7,36 @@ import ChatGPT from "./ChatGPT";
 import PropTypes from "prop-types";
 import styles from "./ScannerComponent.module.css";
 import TextIdentified from "./TextIdentified.jsx"; // Import TextIdentified component
+import Photo from './Photo.jsx';
 
-const ScannerComponent = ({ className = "", notPressed, updatePressed}) => {
+const ScannerComponent = ({ className = "", notPressed, noPhoto, updatePressed, updatePhoto}) => {
 
   const [capturedPhoto, setCapturedPhoto] = useState(null);
   const [visionResult, setVisionResult] = useState({
     extractedText: "Sample extracted text" // Replace with actual extracted text
   });
   const [showCamera, setShowCamera] = useState(true); // State to toggle camera feed
-
   
-  const handlePhotoCapture = useCallback((photoURL,updatePressed) => {
+  const handlePhotoCapture = useCallback((photoURL) => {
     setCapturedPhoto(photoURL);
-    processPhoto(photoURL);
     setShowCamera(false); // Hide camera after uploading photo
     // You can further process or save the captured photo URL here
-    updatePressed(false);
+    updatePhoto(false);
     console.log('Captured photo URL in ScannerComponent:', photoURL);
-  }, [updatePressed]);;
+  }, [updatePhoto]);;
 
-  const handlePhotoUpload = useCallback((photoURL, updatePressed) => {
+  const handlePhotoUpload = useCallback((photoURL) => {
     setCapturedPhoto(photoURL);
-    processPhoto(photoURL);
     setShowCamera(false); // Hide camera after uploading photos
-    updatePressed(false);
+
+    console.log("notPressed value in ScannerComponent before:", notPressed);
+
+    updatePhoto(false);
+    console.log("notPressed value in ScannerComponent after:", notPressed);
+
     // You can further process or save the uploaded photo URL here
     console.log('Uploaded photo URL in ScannerComponent:', photoURL);
-  }, [updatePressed]);;
-
-  const processPhoto = async (photoURL) => {
-    try {
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ photo: photoURL.split(',')[1] }),
-      });
-      const result = await response.json();
-      setVisionResult(result);
-    } catch (error) {
-      console.error('Error processing photo:', error);
-    }
-  };
+  }, [updatePhoto]);;
 
   return (
     <section className={[styles.scannerComponent, className].join(' ')}>
@@ -57,17 +44,15 @@ const ScannerComponent = ({ className = "", notPressed, updatePressed}) => {
         {showCamera ? (
           <Camera />
         ) : (
-          <div className={styles.photoPreview}>
-            <h2>Processed Image</h2>
-            <img src={capturedPhoto} alt="Processed" />
-          </div>
+          <Photo photoURL={capturedPhoto} onCapture={(capturedPhoto) => setCapturedPhoto(capturedPhoto)} />
         )}
         <div className={styles.buttonContainer}>
           <div className={styles.buttons}>
-            <Gallery notPressed={notPressed} onPhotoUpload={handlePhotoUpload} />
-            <TakePhoto notPressed={notPressed} onPhotoCapture={handlePhotoCapture} />
-            <Scan notPressed={notPressed} />
-            <ChatGPT notPressed={notPressed} />
+            <Gallery noPhoto={noPhoto} onPhotoUpload={(photoURL) => handlePhotoUpload(photoURL, updatePressed)}  />
+            <TakePhoto noPhoto={noPhoto} onPhotoCapture={(photoURL) => handlePhotoCapture(photoURL, updatePressed)}  />
+            <Scan noPhoto={noPhoto} setVisionResult={setVisionResult} capturedPhoto={capturedPhoto} updatePressed={updatePressed}/>
+            <ChatGPT noPhoto={noPhoto} />
+            
           </div>
         </div>
       </div>
@@ -77,8 +62,10 @@ const ScannerComponent = ({ className = "", notPressed, updatePressed}) => {
 
 ScannerComponent.propTypes = {
   className: PropTypes.string,
-  notPressed: PropTypes.bool,
+  notPressed: PropTypes.bool.isRequired,
   updatePressed: PropTypes.func.isRequired, // updatePressed function as required prop
+  photoURL: PropTypes.string.isRequired,
+  setVisionResult: PropTypes.func.isRequired,
 };
 
 export default ScannerComponent;

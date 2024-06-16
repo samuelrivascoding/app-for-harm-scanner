@@ -2,7 +2,7 @@ import {useRef, useCallback } from "react";
 import PropTypes from "prop-types";
 import styles from "./Gallery.module.css";
 
-const Gallery = ({ className = '', notPressed, onPhotoUpload }) => {
+const Gallery = ({ className = '', noPhoto, onPhotoUpload }) => {
   const fileInputRef = useRef(null);
 
   const handleFileChange = useCallback((event) => {
@@ -24,7 +24,7 @@ const Gallery = ({ className = '', notPressed, onPhotoUpload }) => {
   };
 
   return (
-    notPressed && (
+    noPhoto && (
       <div className={[styles.gallery, className].join(" ")}>
         <label className={styles.label} onClick={handleLabelClick}>
           <div className={styles.imagewithtext}>
@@ -54,7 +54,7 @@ const Gallery = ({ className = '', notPressed, onPhotoUpload }) => {
 
 Gallery.propTypes = {
   className: PropTypes.string,
-  notPressed: PropTypes.bool,
+  noPhoto: PropTypes.bool.isRequired,
   onPhotoUpload: PropTypes.func.isRequired,
 };
 

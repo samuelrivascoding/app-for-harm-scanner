@@ -6,7 +6,7 @@ const fs = require('fs'); // Node.js file system module
 
 // Initialize Google Cloud Vision client
 const client = new vision.ImageAnnotatorClient({
-  keyFilename: './apt-cycling-425621-r6-42a2db08dff7.json', // Adjust the path to your service account key file
+  keyFilename: 'k', // Adjust the path to your service account key file
 });
 
 async function handler(req, res) {

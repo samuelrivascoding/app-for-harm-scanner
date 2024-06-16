@@ -1,14 +1,52 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./Scan.module.css";
+import { useSelector, useDispatch } from 'react-redux';
 
-const Scan = ({ className = "", notPressed }) => {
-  const onScanClick = useCallback(() => {
-    //TODO: hide initially, once gallery or takePhoto pressed, use this button to process selected text,
-  }, []);
+const Scan = ({ className = "", noPhoto, setVisionResult, updatePressed }) => {
+  const capturedPhoto = useSelector((state) => state.photo.croppedPhoto);
+  const dispatch = useDispatch();
+
+  const processPhoto = async (photo) => {
+    try {
+      const formData = new FormData();
+      formData.append('image', photo);
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        headers: {
+          // 'Content-Type': 'multipart/form-data', // Do not set Content-Type manually for FormData
+        },
+        body: formData,
+      });
+      const result = await response.json();
+      dispatch(setVisionResult(result));
+      return result;
+    } catch (error) {
+      console.error('Error processing photo:', error);
+      const defaultResult = { extractedText: 'Still text' }; // Set default value
+      dispatch(setVisionResult(defaultResult));
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    if (capturedPhoto) {
+      processPhoto(capturedPhoto);
+    }
+  }, [capturedPhoto, dispatch]);
+
+  const onScanClick = useCallback(async () => {
+    updatePressed(false);
+    if (capturedPhoto) {
+      const result = await processPhoto(capturedPhoto);
+      return result;
+    }
+    return null; // or some default value
+  }, [capturedPhoto, updatePressed]);
 
   return (
-    !notPressed && (
+    !noPhoto && (
       <button
         className={[styles.scan, className].join(" ")}
         onClick={onScanClick}
@@ -31,7 +69,9 @@ const Scan = ({ className = "", notPressed }) => {
 
 Scan.propTypes = {
   className: PropTypes.string,
-  notPressed: PropTypes.bool,
+  noPhoto: PropTypes.bool,
+  setVisionResult: PropTypes.func.isRequired,
+  updatePressed: PropTypes.func.isRequired,
 };
 
 export default Scan;

@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import PropTypes from "prop-types";
 import styles from "./TakePhoto.module.css";
 
-const TakePhoto = ({ className = "", notPressed, onPhotoCapture  }) => {
+const TakePhoto = ({ className = "", noPhoto, onPhotoCapture  }) => {
   const capturePhoto = useCallback(() => {
     //TODO: capture photo, then once photo is uploaded and processed, hide and switch to new buttons
     const canvas = document.createElement('canvas');
@@ -18,7 +18,7 @@ const TakePhoto = ({ className = "", notPressed, onPhotoCapture  }) => {
   }, [onPhotoCapture]);
 
   return (
-    notPressed && (
+    noPhoto && (
       <button
         className={[styles.takephoto, className].join(" ")}
         onClick={capturePhoto}
@@ -36,7 +36,7 @@ const TakePhoto = ({ className = "", notPressed, onPhotoCapture  }) => {
 
 TakePhoto.propTypes = {
   className: PropTypes.string,
-  notPressed: PropTypes.bool,
+  noPhoto: PropTypes.bool,
   onPhotoCapture: PropTypes.func.isRequired,
 };
 

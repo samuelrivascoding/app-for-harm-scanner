@@ -1,9 +1,12 @@
 import PropTypes from "prop-types";
 import styles from "./TextIdentified.module.css";
+import { useSelector } from 'react-redux';
 
-const TextIdentified = ({visionResult, className = "" }) => {
 
-  const identifiedText = visionResult && visionResult.extractedText ? visionResult.extractedText : '';
+
+const TextIdentified = ({ className = "" }) => {
+
+  const identifiedText = useSelector((state) => state.visionResult);
 
   return (
     <b
@@ -14,9 +17,6 @@ const TextIdentified = ({visionResult, className = "" }) => {
 
 TextIdentified.propTypes = {
   className: PropTypes.string,
-  visionResult: PropTypes.shape({
-    extractedText: PropTypes.string // Assuming extractedText is a string
-  }),
 
 };
 
