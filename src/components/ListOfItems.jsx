@@ -1,33 +1,33 @@
-import IngredientText from "./IngredientText";
 import IngredientChatGPT from "./IngredientChatGPT";
+import IngredientText from "./IngredientText";
 import PropTypes from "prop-types";
 import styles from "./ListOfItems.module.css";
 
 const ListOfItems = ({ className = "", showListOfItems }) => {
   return (
-    showListOfItems && (
-      <div className={[styles.listOfItems, className].join(" ")}>
+    !showListOfItems && (
+      <section className={[styles.listOfItems, className].join(" ")}>
         <div className={styles.list}>
           <div className={styles.listheader}>
-            <b className={styles.header}>
+            <h3 className={styles.header}>
               List of ingredients that may be harmful
-            </b>
+            </h3>
           </div>
           <div className={styles.listlistofitems}>
             <IngredientText />
           </div>
         </div>
-        <div className={styles.list1}>
-          <div className={styles.listheader1}>
-            <b className={styles.header1}>
+        <div className={styles.list}>
+          <div className={styles.listheader}>
+            <h3 className={styles.header}>
               Highlighted Text and if harmful to your health
-            </b>
+            </h3>
           </div>
-          <div className={styles.listlistofitems1}>
+          <div className={styles.listlistofitems}>
             <IngredientChatGPT />
           </div>
         </div>
-      </div>
+      </section>
     )
   );
 };

@@ -35,6 +35,7 @@ function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
 }
 
 export default function App({photoURL}) {
+  const dispatch = useDispatch();
   const [imgSrc, setImgSrc] = useState(photoURL || defaultPhotoUrl);
   const previewCanvasRef = useRef(null);
   const imgRef = useRef(null);
@@ -63,16 +64,14 @@ export default function App({photoURL}) {
     }
   }, [photoURL, aspect]);
 
-  async function onDownloadCropClick() {
+  async function onSetImageClick() {
     const image = imgRef.current;
     const previewCanvas = previewCanvasRef.current;
     if (!image || !previewCanvas || !completedCrop) {
       throw new Error('Crop canvas does not exist');
     }
 
-    // This will size relative to the uploaded image
-    // size. If you want to size according to what they
-    // are looking at on screen, remove scaleX + scaleY
+    // This will size relative to the uploaded image size.
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
 
@@ -97,26 +96,14 @@ export default function App({photoURL}) {
       offscreen.height
     );
 
-    // You might want { type: "image/jpeg", quality: <0 to 1> } to
-    // reduce image size
     const blob = await offscreen.convertToBlob({
       type: 'image/png',
     });
 
     const base64String = await toBase64(blob);
 
+    // Dispatch an action with the base64 string (adjust the action type and payload as necessary)
     dispatch({ type: 'SET_CROPPED_PHOTO', payload: base64String });
-
-
-    if (blobUrlRef.current) {
-      URL.revokeObjectURL(blobUrlRef.current);
-    }
-    blobUrlRef.current = URL.createObjectURL(blob);
-
-    if (hiddenAnchorRef.current) {
-      hiddenAnchorRef.current.href = blobUrlRef.current;
-      hiddenAnchorRef.current.click();
-    }
   }
 
   useDebounceEffect(
@@ -213,7 +200,7 @@ export default function App({photoURL}) {
             />
           </div>
           <div>
-            <button onClick={onDownloadCropClick}>Download Crop</button>
+            <button onClick={onSetImageClick}>Set Image to be scanned</button>
             <div style={{ fontSize: 12, color: '#666' }}>
               If you get a security error when downloading try opening the
               Preview in a new tab (icon near top right).

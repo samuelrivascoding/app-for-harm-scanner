@@ -1,11 +1,23 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./Scan.module.css";
 import { useSelector, useDispatch } from 'react-redux';
+import { setMatchedRows, setVisionResult } from './actions';
+import { compareTextWithKeywords } from './compareTextWithKeywords'; // Import the function here
 
-const Scan = ({ className = "", noPhoto, setVisionResult, updatePressed }) => {
+
+const Scan = ({ className = "", noPhoto, updatePressed }) => {
   const capturedPhoto = useSelector((state) => state.photo.croppedPhoto);
   const dispatch = useDispatch();
+  const [text, setText] = useState('');
+  const matchedRows = useSelector(state => state.matchedRows);
+
+  const compareText = () => {
+    compareTextWithKeywords(text);
+  };
+
+
+
 
   const processPhoto = async (photo) => {
     try {
@@ -21,29 +33,28 @@ const Scan = ({ className = "", noPhoto, setVisionResult, updatePressed }) => {
       });
       const result = await response.json();
       dispatch(setVisionResult(result));
+      setText(result.extractedText); // Update the text state with the extracted text
       return result;
     } catch (error) {
       console.error('Error processing photo:', error);
       const defaultResult = { extractedText: 'Still text' }; // Set default value
       dispatch(setVisionResult(defaultResult));
+      setText(defaultResult.extractedText); // Update the text state with the default text
       return null;
     }
   };
 
-  useEffect(() => {
-    if (capturedPhoto) {
-      processPhoto(capturedPhoto);
-    }
-  }, [capturedPhoto, dispatch]);
 
   const onScanClick = useCallback(async () => {
     updatePressed(false);
+
     if (capturedPhoto) {
       const result = await processPhoto(capturedPhoto);
-      return result;
+      if (result) {
+        compareText();
+      }
     }
-    return null; // or some default value
-  }, [capturedPhoto, updatePressed]);
+  }, [capturedPhoto, updatePressed, compareText]);
 
   return (
     !noPhoto && (

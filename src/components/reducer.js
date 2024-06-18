@@ -1,6 +1,10 @@
 const initialState = {
   croppedPhoto: null,
-  visionResult: null,
+  visionResult: 'tobacco',
+  column2: [],
+  keywords: [],
+  matchedRows: [],
+
 };
 
 const photoReducer = (state = initialState, action) => {
@@ -15,6 +19,8 @@ const photoReducer = (state = initialState, action) => {
         ...state,
         visionResult: action.payload,
       };
+    case 'SET_MATCHED_ROWS':
+    return { ...state, matchedRows: action.payload };
     default:
       return state;
   }
