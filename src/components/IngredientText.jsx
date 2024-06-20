@@ -1,36 +1,50 @@
 import PropTypes from "prop-types";
 import styles from "./IngredientText.module.css";
+import { useSelector } from 'react-redux';
+import useExcelProcessing from './useExcelProcessing'; // Adjust the import path as needed
 
-const IngredientText = ({ className = "", matchedRows }) => {
-
-  if (matchedRows.length === 0) {
-    return (
-      <div className={[styles.ingredienttext, className].join(" ")}>
-        No harmful substances detected
-      </div>
-    );
-  }
+const IngredientText = ({ className = ""}) => {
+  const textToCompare = useSelector((state) => {
+    return state.photo.visionResult.extractedText;
+  });
+  const { matchedRows } = useExcelProcessing(textToCompare);
   
   return (
     <div className={[styles.ingredienttext, className].join(" ")}>
-      {matchedRows.map((row, index) => (
-        <div key={index} className={styles.item}>
-          <div>{row.column1}</div>
-          <div>{row.column2}</div>
-        </div>
-      ))}
+      <div>
+      {matchedRows.length > 0 ? (
+        <ul>
+          {matchedRows.map((row, index) => (
+            <li key={index}>
+              <strong>Keywords:</strong> {row.keywords.join(', ')}<br />
+              <strong>Data:</strong> {row.data}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No matched rows found.</p>
+      )}
+    </div>
     </div>
   );
 };
 
 IngredientText.propTypes = {
   className: PropTypes.string,
-  matchedRows: PropTypes.arrayOf(
-    PropTypes.shape({
-      column1: PropTypes.string,
-      column2: PropTypes.string,
-    })
-  ).isRequired,
 };
 
 export default IngredientText;
+
+/*
+  const isProcessingComplete = useSelector((state) => state.photo.isProcessingComplete);
+  const [text, setText] = useState("");
+  const { matchedRows } = useExcelProcessing(text); // Using the custom hook
+
+  useEffect(() => {
+    if (isProcessingComplete) {
+      const textToCompare = useSelector((state) => state.photo.visionResult.extractedText);
+      setText(textToCompare);
+    }
+  }, [isProcessingComplete]);
+
+  */

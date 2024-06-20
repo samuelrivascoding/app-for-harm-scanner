@@ -104,6 +104,7 @@ export default function App({photoURL}) {
 
     // Dispatch an action with the base64 string (adjust the action type and payload as necessary)
     dispatch({ type: 'SET_CROPPED_PHOTO', payload: base64String });
+    console.log("set cropped photo success");
   }
 
   useDebounceEffect(
@@ -201,22 +202,6 @@ export default function App({photoURL}) {
           </div>
           <div>
             <button onClick={onSetImageClick}>Set Image to be scanned</button>
-            <div style={{ fontSize: 12, color: '#666' }}>
-              If you get a security error when downloading try opening the
-              Preview in a new tab (icon near top right).
-            </div>
-            <a
-              href="#hidden"
-              ref={hiddenAnchorRef}
-              download
-              style={{
-                position: 'absolute',
-                top: '-200vh',
-                visibility: 'hidden',
-              }}
-            >
-              Hidden download
-            </a>
           </div>
         </>
       )}

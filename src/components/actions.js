@@ -8,7 +8,11 @@ export const setVisionResult = (result) => ({
   payload: result,
 });
 
-export const setMatchedRows = (rows) => ({
+export const setMatchedRows = (matchedRows) => ({
   type: 'SET_MATCHED_ROWS',
-  payload: rows,
+  payload: matchedRows,
+});
+export const setHealthInfo = (info) => ({
+  type: 'SET_HEALTH_INFO',
+  payload: info,
 });
