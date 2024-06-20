@@ -1,11 +1,20 @@
 import { useCallback } from "react";
 import PropTypes from "prop-types";
 import styles from "./ChatGPT.module.css";
+import { lookupHealthInfo } from "./ChatGPTScript.js"
+import { useDispatch } from "react-redux";
+import { setHealthInfo } from './reducer'; // Adjust the import path as needed
 
 const ChatGPT = ({ className = "", noPhoto }) => {
-  const onChatGPTClick = useCallback(() => {
+  const dispatch = useDispatch();
+
+  const onChatGPTClick = useCallback(async () => {
+    const result = await lookupHealthInfo('sortedItemValue');
+            dispatch(setHealthInfo(result));
     //TODO: hide initially, once gallery or takePhoto pressed, use this button to process selected text and change gpt/ ingredient text
-  }, []);
+  }, [dispatch]);
+
+
 
   return (
     !noPhoto && (

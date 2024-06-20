@@ -10,7 +10,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: var(--gap-17xl);
+  gap: 17px;
   text-align: left;
   font-size: var(--heading-desktop-h5-size);
   color: var(--mint-cream);

@@ -1,23 +1,14 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./Scan.module.css";
 import { useSelector, useDispatch } from 'react-redux';
-import { setMatchedRows, setVisionResult } from './actions';
-import { compareTextWithKeywords } from './compareTextWithKeywords'; // Import the function here
+import { setVisionResult, setProcessingComplete } from './reducer.js'; // Adjust the import path as needed
 
 
 const Scan = ({ className = "", noPhoto, updatePressed }) => {
-  const capturedPhoto = useSelector((state) => state.photo.croppedPhoto);
   const dispatch = useDispatch();
-  const [text, setText] = useState('');
-  const matchedRows = useSelector(state => state.matchedRows);
-
-  const compareText = () => {
-    compareTextWithKeywords(text);
-  };
-
-
-
+  const capturedPhoto = useSelector((state) => state.photo.croppedPhoto);
+  const [text, setText] = useState('');  
 
   const processPhoto = async (photo) => {
     try {
@@ -31,18 +22,28 @@ const Scan = ({ className = "", noPhoto, updatePressed }) => {
         },
         body: formData,
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload photo: ' + response.status);
+      }
       const result = await response.json();
       dispatch(setVisionResult(result));
       setText(result.extractedText); // Update the text state with the extracted text
+      dispatch(setProcessingComplete(true)); // Processing complete
+
       return result;
     } catch (error) {
-      console.error('Error processing photo:', error);
-      const defaultResult = { extractedText: 'Still text' }; // Set default value
+      const defaultResult = { extractedText: 'tobacco' }; // Set default value
       dispatch(setVisionResult(defaultResult));
       setText(defaultResult.extractedText); // Update the text state with the default text
-      return null;
+      dispatch(setProcessingComplete(true)); // Processing complete
+      return defaultResult;
     }
   };
+
+  useEffect(() => {
+    console.log("Updated text:", text);
+  }, [text]);
 
 
   const onScanClick = useCallback(async () => {
@@ -50,11 +51,10 @@ const Scan = ({ className = "", noPhoto, updatePressed }) => {
 
     if (capturedPhoto) {
       const result = await processPhoto(capturedPhoto);
-      if (result) {
-        compareText();
-      }
+      console.log(result+"this is the result:")
+      console.log("vision result success");
     }
-  }, [capturedPhoto, updatePressed, compareText]);
+  }, [capturedPhoto, updatePressed,processPhoto]);
 
   return (
     !noPhoto && (
@@ -81,7 +81,6 @@ const Scan = ({ className = "", noPhoto, updatePressed }) => {
 Scan.propTypes = {
   className: PropTypes.string,
   noPhoto: PropTypes.bool,
-  setVisionResult: PropTypes.func.isRequired,
   updatePressed: PropTypes.func.isRequired,
 };
 
