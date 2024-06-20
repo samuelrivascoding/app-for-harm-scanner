@@ -7,10 +7,10 @@ const openai = new OpenAI({
 
 export async function sortItems(inputText) {
     const prompt = `Sort the following items: ${inputText}`;
-    const gptResponse = await openai.complete({
-        model: "text-davinci-003",
+    const gptResponse = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo-instruct",
         prompt: prompt,
-        maxTokens: 75,
+        max_Tokens: 75,
     });
 
     const sortedList = gptResponse.choices[0].text.trim();
@@ -21,11 +21,14 @@ export async function sortItems(inputText) {
 
 export async function lookupHealthInfo(sortedItem) {
     const prompt = `What is ${sortedItem}? Is it harmful to health?`;
-    const gptResponse = await openai.complete({
-        engine: "text-davinci-003",
+    const gptResponse = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo-instruct",
         prompt: prompt,
-        maxTokens: 30,
+        max_Tokens: 30,
+        temperature: 0.2,
+        
     });
+    console.log(gptResponse.data.choices[0].text); // Handle the response as needed
     const healthInfo = gptResponse.choices[0].text.trim();
     return healthInfo;
 }
