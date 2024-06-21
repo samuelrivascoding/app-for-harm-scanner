@@ -1,0 +1,18 @@
+.header {
+  position: relative;
+  line-height: 140%;
+}
+.textComponent {
+  align-self: stretch;
+  background-color: var(--companycolor);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 17px;
+  text-align: left;
+  font-size: var(--heading-desktop-h5-size);
+  color: var(--mint-cream);
+  font-family: var(--text-regular-semi-bold);
+}

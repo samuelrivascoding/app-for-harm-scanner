@@ -1,87 +1,24 @@
-.cameraChild {
-  align-self: stretch;
-  flex: 1;
-  position: relative;
-  border-radius: var(--br-xl);
-  background-color: var(--color-gainsboro);
-  max-width: 100%;
-}
-.camera {
-  align-self: stretch;
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 0px var(--padding-5xs) 0px 0px;
-  box-sizing: border-box;
-  max-width: 100%;
-}
-.galleryPreviewIcon {
-  height: 36px;
-  width: 36px;
-  position: relative;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.galleryPreview {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 0px var(--padding-7xs);
-}
-.gallery1 {
-  position: relative;
-  line-height: 160%;
-  font-weight: 500;
-  display: inline-block;
-  min-width: 48px;
-}
-.gallery {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: var(--padding-4xs) var(--padding-5xl);
-}
-.imagePreviewIcon {
-  width: 50px;
-  height: 50px;
-  position: relative;
-  border-radius: var(--br-6xl);
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.photo {
-  height: 76px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--padding-base) var(--padding-5xl);
-  box-sizing: border-box;
-}
 .buttons {
-  width: 256px;
   border-radius: var(--br-xl);
   background-color: var(--mint-cream);
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
+  max-width: 100%;
+  row-gap: 20px;
 }
-.scannerControls {
+.buttonContainer {
   align-self: stretch;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
   padding: 0px var(--padding-xl);
+  box-sizing: border-box;
+  max-width: 100%;
 }
 .scanner {
-  align-self: stretch;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -92,7 +29,6 @@
 }
 .scannerComponent {
   align-self: stretch;
-  height: 900px;
   background-color: var(--companycolor);
   overflow: hidden;
   flex-shrink: 0;
@@ -100,11 +36,26 @@
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: var(--padding-44xl-5) var(--padding-45xl);
+  padding: var(--padding-44xl-5) var(--padding-5xl);
   box-sizing: border-box;
   max-width: 100%;
-  text-align: left;
-  font-size: var(--font-size-sm);
-  color: var(--licorice);
-  font-family: var(--font-inter);
+}
+
+@media screen and (max-width: 900px) {
+  .scannerComponent {
+    padding-top: var(--padding-22xl);
+    padding-bottom: var(--padding-22xl);
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 450px) {
+  .buttons {
+    flex-wrap: wrap;
+  }
+
+  .scannerComponent {
+    padding-top: var(--padding-8xl);
+    padding-bottom: var(--padding-8xl);
+    box-sizing: border-box;
+  }
 }

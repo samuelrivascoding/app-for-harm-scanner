@@ -1,7 +1,11 @@
 .mediumLengthHero {
+  margin: 0;
   align-self: stretch;
   position: relative;
+  font-size: inherit;
   line-height: 120%;
+  font-weight: 700;
+  font-family: inherit;
 }
 .loremIpsumDolor {
   align-self: stretch;
@@ -19,28 +23,47 @@
 }
 .button1 {
   position: relative;
+  font-size: var(--text-regular-semi-bold-size);
   line-height: 150%;
+  font-family: var(--text-regular-semi-bold);
+  color: var(--background-color-primary);
+  text-align: left;
+  display: inline-block;
+  min-width: 81px;
 }
 .button {
-  border-radius: var(--br-5xl);
-  background-color: var(--licorice);
+  cursor: pointer;
   border: 1px solid var(--border-primary);
+  padding: var(--padding-3xs) var(--padding-4xl);
+  background-color: var(--licorice);
+  border-radius: var(--br-5xl);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: var(--padding-xs) var(--padding-5xl);
-  cursor: pointer;
+  white-space: nowrap;
+}
+.button:hover {
+  background-color: var(--color-dimgray);
+  border: 1px solid var(--color-darkslategray-100);
+  box-sizing: border-box;
 }
 .button2 {
-  border-radius: var(--br-5xl);
+  cursor: pointer;
   border: 1px solid var(--mint-cream);
+  padding: var(--padding-3xs) var(--padding-4xl);
+  background-color: transparent;
+  border-radius: var(--br-5xl);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: var(--padding-xs) var(--padding-5xl);
-  cursor: pointer;
+  white-space: nowrap;
+}
+.button2:hover {
+  background-color: var(--color-gainsboro-200);
+  border: 1px solid var(--color-gainsboro-100);
+  box-sizing: border-box;
 }
 .actions {
   display: flex;
@@ -49,25 +72,27 @@
   justify-content: flex-start;
   padding: var(--padding-base) 0px 0px;
   gap: var(--gap-base);
-  font-size: var(--text-regular-semi-bold-size);
 }
 .column {
-  flex: 1;
-  height: 564px;
+  width: 731px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: var(--padding-xl) 0px;
+  box-sizing: border-box;
   gap: var(--gap-5xl);
-  min-width: 320px;
+  min-width: 560px;
+  max-width: 100%;
 }
-.frameSquare800x800Icon {
-  width: 564px;
+.squareIcon {
+  flex: 1;
   position: relative;
-  height: 680px;
+  max-width: 100%;
   overflow: hidden;
-  flex-shrink: 0;
-  object-fit: cover;
+  object-fit: contain;
+  min-width: 489px;
+  margin-left: -2px;
 }
 .header5 {
   align-self: stretch;
@@ -79,12 +104,48 @@
   align-items: center;
   justify-content: center;
   padding: var(--padding-11xl) var(--padding-45xl);
-  background-image: url("/public/breakpoint--desktop@3x.png");
+  box-sizing: border-box;
+  background-image: url("/public/header--5@3x.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
+  max-width: 100%;
+  row-gap: 20px;
   text-align: left;
   font-size: var(--heading-desktop-h1-size);
   color: var(--background-color-primary);
   font-family: var(--text-regular-semi-bold);
+}
+
+@media screen and (max-width: 900px) {
+  .mediumLengthHero {
+    font-size: var(--font-size-26xl);
+    line-height: 54px;
+  }
+
+  .column {
+    min-width: 100%;
+  }
+
+  .squareIcon {
+    min-width: 100%;
+    }
+
+  .header5 {
+    padding: var(--padding-xl) var(--padding-13xl);
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 700px) {
+  .mediumLengthHero {
+    font-size: var(--font-size-15xl);
+    line-height: 40px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .column {
+    padding-top: var(--padding-67xl);
+    padding-bottom: var(--padding-67xl);
+    box-sizing: border-box;
+  }
 }

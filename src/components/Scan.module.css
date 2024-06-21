@@ -1,0 +1,41 @@
+.frameIcon {
+  width: 36px;
+  height: 36px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.scan1 {
+  position: relative;
+  font-size: var(--font-size-sm);
+  line-height: 160%;
+  font-weight: 500;
+  font-family: var(--font-inter);
+  color: var(--licorice);
+  text-align: left;
+  display: inline-block;
+  min-width: 34px;
+}
+.scanWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0px var(--padding-12xs);
+}
+.imagewithtext3 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.scan {
+  cursor: pointer;
+  border: none;
+  padding: var(--padding-4xs) var(--padding-5xl);
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}

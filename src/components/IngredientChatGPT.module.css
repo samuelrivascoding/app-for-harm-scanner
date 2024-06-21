@@ -1,0 +1,24 @@
+.item {
+  height: 27px;
+  flex: 1;
+  position: relative;
+  line-height: 150%;
+  display: inline-block;
+  min-width: 250px;
+  max-width: 100%;
+  padding: 0;
+}
+.ingredienttext {
+  flex: 1;
+  border-bottom: 1px solid var(--licorice);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--text-medium-normal-size);
+  color: var(--licorice);
+  font-family: var(--text-regular-semi-bold);
+}
