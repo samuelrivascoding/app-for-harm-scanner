@@ -17,9 +17,6 @@ const Scan = ({ className = "", noPhoto, updatePressed }) => {
 
       const response = await fetch('/api/upload', {
         method: 'POST',
-        headers: {
-          // 'Content-Type': 'multipart/form-data', // Do not set Content-Type manually for FormData
-        },
         body: formData,
       });
 
