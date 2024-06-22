@@ -149,18 +149,17 @@ export default function App({photoURL}) {
     <div className={styles.App}>
       <div className={styles.CropControls}>
         <div>
-          <label htmlFor="scale-input">Scale: </label>
+          <label htmlFor="scale-input" style={{color: 'white'}}>Scale: </label>
           <input
             id="scale-input"
             type="number"
-            step="0.1"
-            value={scale}
+            value={Number.isInteger(scale) ? scale : scale.toFixed(1)} // Format to 1 decimal place if not an integer
             disabled={!imgSrc}
             onChange={(e) => setScale(Number(e.target.value))}
           />
         </div>
         <div>
-          <label htmlFor="rotate-input">Rotate: </label>
+          <label htmlFor="rotate-input" style={{color: 'white'}}>Rotate: </label>
           <input
             id="rotate-input"
             type="number"

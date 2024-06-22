@@ -93,6 +93,7 @@
   object-fit: contain;
   min-width: 489px;
   margin-left: -2px;
+  max-width: max-content;
 }
 .header5 {
   align-self: stretch;

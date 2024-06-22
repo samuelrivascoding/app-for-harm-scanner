@@ -18,7 +18,7 @@ const Root = () => {
   }, [navigate]);
 
   const onGetStartedTextClick = useCallback(() => {
-    navigate("/");
+    navigate("/get-started");
   }, [navigate]);
 
   const onLearnMoreTextClick = useCallback(() => {

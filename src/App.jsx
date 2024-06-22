@@ -33,6 +33,10 @@ function App() {
         title = "";
         metaDescription = "";
         break;
+      case "/get-started":
+        title = "";
+        metaDescription = "";
+        break;
       case "/about-us":
         title = "";
         metaDescription = "";
@@ -55,9 +59,10 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<GetStarted />} />
+      <Route path="/" element={<Root />} />
       <Route path="/home" element={<Root />} />
       <Route path="/about-us" element={<AboutUs />} />
+      <Route path="/get-started" element={<GetStarted />} />
     </Routes>
   );
 }

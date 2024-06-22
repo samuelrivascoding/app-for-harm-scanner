@@ -7,7 +7,7 @@ const Header = ({ className = "" }) => {
   const navigate = useNavigate();
 
   const onButtonClick = useCallback(() => {
-    navigate("/");
+    navigate("/get-started");
   }, [navigate]);
 
   const onButton1Click = useCallback(() => {
@@ -22,7 +22,7 @@ const Header = ({ className = "" }) => {
             Empowering you to detect harmful substances.
           </h1>
           <div className={styles.loremIpsumDolor}>
-            Our online software, powered by Google Lens, scans text to identify
+            Our online software, powered by Google Lens and ChatGPT, scans text to identify
             substances associated with carcinogens and birth defects, keeping
             you and your loved ones safe.
           </div>

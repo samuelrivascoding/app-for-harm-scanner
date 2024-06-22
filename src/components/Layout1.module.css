@@ -6,6 +6,8 @@
   overflow: hidden;
   object-fit: cover;
   min-width: 264px;
+  max-width: max-content;
+
 }
 .iconRelume {
   width: 80px;

@@ -14,7 +14,7 @@ const Layout2 = ({ className = "" }) => {
                 Based on the The Proposition 65 List from the California Office
                 of Environmental Health Hazard Assessment, the software detects
                 substances that are on that list and other substances that may
-                require caution during pregnancy, such as retinoids
+                require caution, especially during pregnancy, like retinoids.
               </div>
             </div>
           </div>
@@ -23,7 +23,8 @@ const Layout2 = ({ className = "" }) => {
               <b className={styles.subheadingOne}>Scan</b>
               <div className={styles.text}>
                 Effortlessly scan text using Google Lens to identify harmful
-                substances and protect your health.
+                substances and protect your health. Text identified is compared to over 1000 items that may be associated with harm.
+                <div>Click here to download full list: <a href="public\Book 1.xlsx" download="listOfSubstances.xlsx">List</a></div>
               </div>
             </div>
             <div className={styles.listItem}>

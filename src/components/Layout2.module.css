@@ -96,6 +96,8 @@
   overflow: hidden;
   object-fit: cover;
   min-width: 320px;
+  max-width: max-content;
+
 }
 .layout4 {
   align-self: stretch;

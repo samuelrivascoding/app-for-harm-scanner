@@ -1,32 +1,18 @@
 const { ImageAnnotatorClient } = require('@google-cloud/vision');
-const { SecretManagerServiceClient } = require('@google-cloud/secret-manager');
 
-const secretManagerClient = new SecretManagerServiceClient();
+function initializeVisionClient() {
+  const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'); // Replace escaped newlines with actual newlines
 
-async function getSecret(secretName) {
-  try {
-    const [version] = await secretManagerClient.accessSecretVersion({
-      name: `projects/YOUR_PROJECT_ID/secrets/${secretName}/versions/latest`,
-    });
-    return version.payload.data.toString('utf8');
-  } catch (error) {
-    console.warn('Secret not found, falling back to default API key.');
-    return null;
-  }
-}
-
-async function initializeVisionClient() {
-  const serviceAccountKey = await getSecret('SERVICE_ACCOUNT_KEY');
-  if (serviceAccountKey) {
+  if (clientEmail && privateKey) {
     return new ImageAnnotatorClient({
-      credentials: JSON.parse(serviceAccountKey),
+      credentials: {
+        client_email: clientEmail,
+        private_key: privateKey,
+      },
     });
   } else {
-    // Use default API key
-    return new ImageAnnotatorClient({
-      key: import.meta.env.VITE_OPENAI_API_KEY,
-      dangerouslyAllowBrowser: true
-    });
+    throw new Error('Google Cloud credentials are not set in environment variables');
   }
 }
 

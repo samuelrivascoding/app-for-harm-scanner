@@ -18,7 +18,7 @@ const AboutUs = () => {
   }, [navigate]);
 
   const onGetStartedTextClick = useCallback(() => {
-    navigate("/");
+    navigate("/get-started");
   }, [navigate]);
 
   const onLearnMoreTextClick = useCallback(() => {

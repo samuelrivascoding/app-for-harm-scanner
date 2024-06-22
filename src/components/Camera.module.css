@@ -3,7 +3,6 @@
   flex: 1;
   position: relative;
   border-radius: var(--br-5xl);
-  background-color: var(--background-color-primary);
   max-width: 100%;
 }
 .camera {

@@ -14,8 +14,7 @@ const Layout = ({ className = "" }) => {
         <div className={styles.tabHorizontal}>
           <h1 className={styles.heading}>Using the Software</h1>
           <div className={styles.text}>
-            Open the Google Lens app. Point your camera at the text you want to
-            scan. Tap the scan button to analyze the text. Simple as that!
+            Navigate to the get started page in order to open the app. Upload a photo or point the screen at something to capture. Simple as that!
           </div>
         </div>
         <div className={styles.tabHorizontal1}>
