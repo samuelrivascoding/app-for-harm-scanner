@@ -1,10 +1,11 @@
 import OpenAI from 'openai';
 
 const openai = new OpenAI({
-  apiKey: process.env.VITE_OPENAI_API_KEY,
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true
 });
 
-export default async function lookupHealthInfo(sortedItem) {
+export async function lookupHealthInfo(sortedItem) {
     const prompt = `What is ${sortedItem}? Is it harmful to health?`;
     const gptResponse = await openai.chat.completions.create({
         model: "gpt-3.5-turbo-instruct",
