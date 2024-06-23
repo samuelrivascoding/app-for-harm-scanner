@@ -12,27 +12,41 @@ const Scan = ({ className = "", noPhoto, updatePressed }) => {
 
   const processPhoto = async (photo) => {
     try {
-      const formData = new FormData();
-      formData.append('image', photo);
+    // Convert the image to a base64 string
+    const reader = new FileReader();
+    reader.readAsDataURL(photo);
+    reader.onloadend = async () => {
+      const base64Image = reader.result.split(',')[1]; // Remove the data URL prefix
 
-      const response = await fetch('/api/upload', {
+      const response = await fetch('/api/analyze', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ imageBase64: base64Image })
       });
 
       if (!response.ok) {
-        throw new Error('Failed to upload photo: ' + response.status);
+        throw new Error('Failed to analyze photo: ' + response.status);
       }
+
       const result = await response.json();
       dispatch(setVisionResult(result));
-      setText(result.extractedText); // Update the text state with the extracted text
+      setText(result.detections[0]); // Update the text state with the extracted text
       dispatch(setProcessingComplete(true)); // Processing complete
 
       return result;
+      };
+      reader.onerror = (error) => {
+        console.error('Error reading photo:', error);
+        throw new Error('Error reading photo: ' + error);
+      };
+
     } catch (error) {
-      const defaultResult = { extractedText: 'tobacco' }; // Set default value
+      console.error('Error during photo processing:', error);
+      const defaultResult = { detections: ['tobacco']  }; // Set default value
       dispatch(setVisionResult(defaultResult));
-      setText(defaultResult.extractedText); // Update the text state with the default text
+      setText(defaultResult.detections[0]); // Update the text state with the default text
       dispatch(setProcessingComplete(true)); // Processing complete
       return defaultResult;
     }

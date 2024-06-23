@@ -81,36 +81,38 @@ export default function App({photoURL}) {
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
 
-    const offscreen = new OffscreenCanvas(
-      completedCrop.width * scaleX,
-      completedCrop.height * scaleY
-    );
-    const ctx = offscreen.getContext('2d');
+    const canvas = document.createElement('canvas');
+    canvas.width = completedCrop.width * scaleX;
+    canvas.height = completedCrop.height * scaleY;
+    const ctx = canvas.getContext('2d');
+
     if (!ctx) {
       throw new Error('No 2d context');
     }
 
     ctx.drawImage(
-      previewCanvas,
+      image,
+      completedCrop.x * scaleX,
+      completedCrop.y * scaleY,
+      completedCrop.width * scaleX,
+      completedCrop.height * scaleY,
       0,
       0,
-      previewCanvas.width,
-      previewCanvas.height,
-      0,
-      0,
-      offscreen.width,
-      offscreen.height
+      canvas.width,
+      canvas.height
     );
 
-    const blob = await offscreen.convertToBlob({
-      type: 'image/png',
-    });
+    canvas.toBlob(async (blob) => {
+      if (!blob) {
+        throw new Error('Failed to create blob');
+      }
 
-    const base64String = await toBase64(blob);
+      const base64String = await toBase64(blob);
 
-    // Dispatch an action with the base64 string (adjust the action type and payload as necessary)
-    dispatch({ type: 'SET_CROPPED_PHOTO', payload: base64String });
-    console.log("set cropped photo success");
+      // Dispatch an action with the base64 string (adjust the action type and payload as necessary)
+      dispatch({ type: 'SET_CROPPED_PHOTO', payload: base64String });
+      console.log("Set cropped photo success");
+    }, 'image/png');
   }
 
   useDebounceEffect(

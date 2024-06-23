@@ -1,24 +1,5 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    { "handle": "filesystem" },
-    {
-      "src": "/api/photoupload",
-      "dest": "api/photoupload.js"
-    },
-    {
-      "src": "/api/upload",
-      "dest": "api/upload.js"
-    },
-    {
-      "src": "/api/ChatGPTScript",
-      "dest": "api/ChatGPTScript.js"
-    }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
