@@ -65,6 +65,12 @@ export default function App({photoURL}) {
   }, [photoURL, aspect]);
 
   async function onSetImageClick() {
+
+    if (scale === 0) {
+      console.log("Scale is 0, photo not dispatched.");
+      return;
+    }
+    
     const image = imgRef.current;
     const previewCanvas = previewCanvasRef.current;
     if (!image || !previewCanvas || !completedCrop) {

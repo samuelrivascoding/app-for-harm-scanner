@@ -7,17 +7,18 @@
     }
   ],
   "routes": [
+    { "handle": "filesystem" },
     {
       "src": "/api/photoupload",
-      "dest": "/api/photoupload.js"
+      "dest": "api/photoupload.js"
     },
     {
       "src": "/api/upload",
-      "dest": "/api/upload.js"
+      "dest": "api/upload.js"
     },
     {
       "src": "/api/ChatGPTScript",
-      "dest": "/api/ChatGPTScript.js"
+      "dest": "api/ChatGPTScript.js"
     }
   ]
 }
