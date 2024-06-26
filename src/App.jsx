@@ -58,6 +58,7 @@ function App() {
   }, [pathname]);
 
   return (
+    
     <Routes>
       <Route path="/" element={<Root />} />
       <Route path="/home" element={<Root />} />

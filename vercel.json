@@ -1,5 +1,28 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+  "version": 2,
+  "builds": [
+
+    {
+      "src": "api/photoupload.cjs",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/analyze.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    { "handle": "filesystem" },
+
+    {
+      "src": "/api/photoupload",
+      "methods": ["POST"],
+      "dest": "api/photoupload.cjs"
+    },
+    {
+      "src": "/api/analyze",
+      "methods": ["POST"],
+      "dest": "api/analyze.js"
+    }
   ]
 }

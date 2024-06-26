@@ -23,7 +23,7 @@ const photoSlice = createSlice({
       state.croppedPhoto = action.payload;
     },
     setVisionResult: (state, action) => {
-      state.visionResult = action.payload;
+      state.visionResult.extractedText  = action.payload;
     },
     setMatchedRows: (state, action) => {
       state.matchedRows = action.payload;

@@ -8,6 +8,8 @@ import ReactCrop, {
 import { canvasPreview } from './canvasPreview';
 import { useDebounceEffect } from './useDebounceEffect';
 import styles from './Photo.module.css';
+import { setCroppedPhoto } from './reducer.js'; // Adjust the import path as needed
+
 
 
 import 'react-image-crop/dist/ReactCrop.css';
@@ -107,11 +109,11 @@ export default function App({photoURL}) {
         throw new Error('Failed to create blob');
       }
 
-      const base64String = await toBase64(blob);
+      // Convert blob to base64
+      const tempUrl = await toBase64(blob);
 
-      // Dispatch an action with the base64 string (adjust the action type and payload as necessary)
-      dispatch({ type: 'SET_CROPPED_PHOTO', payload: base64String });
-      console.log("Set cropped photo success");
+      dispatch(setCroppedPhoto(tempUrl));
+      console.log("Set cropped photo success:", tempUrl );
     }, 'image/png');
   }
 
@@ -213,5 +215,6 @@ export default function App({photoURL}) {
         </>
       )}
     </div>
+    
   );
 }

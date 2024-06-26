@@ -2,7 +2,7 @@ import OpenAI from 'openai';
 
 const openai = new OpenAI({
   apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true
+  dangerouslyAllowBrowser: true,
 });
 
 export async function lookupHealthInfo(sortedItem) {
@@ -20,6 +20,9 @@ export async function lookupHealthInfo(sortedItem) {
     }
 
     const healthInfo = gptResponse.choices[0].message.content.trim();
+
+    console.log('OpenAI API Status:', gptResponse.status); // Log the API status
+
     return healthInfo;
   } catch (error) {
     console.error('Error fetching health info:', error);

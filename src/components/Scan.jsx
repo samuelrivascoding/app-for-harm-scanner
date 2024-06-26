@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import styles from "./Scan.module.css";
 import { useSelector, useDispatch } from 'react-redux';
 import { setVisionResult, setProcessingComplete } from './reducer.js'; // Adjust the import path as needed
+import analyze from '../../api/analyze.js'
+import useExcelProcessing from './useExcelProcessing.js'
 
 
 const Scan = ({ className = "", noPhoto, updatePressed }) => {
@@ -10,37 +12,19 @@ const Scan = ({ className = "", noPhoto, updatePressed }) => {
   const capturedPhoto = useSelector((state) => state.photo.croppedPhoto);
   const [text, setText] = useState('');  
 
-  const processPhoto = async (photo) => {
+  useEffect(() => {
+    console.log('Text state updated:', text);
+    // You can perform any actions here that depend on the updated text state
+  }, [text]); // Include text as a dependency to run useEffect on text state updates
+
+  const processPhoto = async () => {
     try {
-    // Convert the image to a base64 string
-    const reader = new FileReader();
-    reader.readAsDataURL(photo);
-    reader.onloadend = async () => {
-      const base64Image = reader.result.split(',')[1]; // Remove the data URL prefix
-
-      const response = await fetch('/api/analyze', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ imageBase64: base64Image })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to analyze photo: ' + response.status);
-      }
-
-      const result = await response.json();
+      const result = await analyze(capturedPhoto);
       dispatch(setVisionResult(result));
-      setText(result.detections[0]); // Update the text state with the extracted text
+      setText(result); // Update the text state with the extracted text
       dispatch(setProcessingComplete(true)); // Processing complete
 
       return result;
-      };
-      reader.onerror = (error) => {
-        console.error('Error reading photo:', error);
-        throw new Error('Error reading photo: ' + error);
-      };
 
     } catch (error) {
       console.error('Error during photo processing:', error);
@@ -62,6 +46,7 @@ const Scan = ({ className = "", noPhoto, updatePressed }) => {
 
     if (capturedPhoto) {
       const result = await processPhoto(capturedPhoto);
+      useExcelProcessing(result);
       console.log(result+"this is the result:")
       console.log("vision result success");
     }

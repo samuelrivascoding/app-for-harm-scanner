@@ -9,7 +9,7 @@ export default defineConfig({
   },
   plugins: [react(),],
   define: {
-    'GOOGLE_APPLICATION_CREDENTIALS': JSON.stringify(process.env.GOOGLE_APPLICATION_CREDENTIALS || ''),
+    'VITE_GOOGLE_APPLICATION_CREDENTIALS': JSON.stringify(process.env.GOOGLE_APPLICATION_CREDENTIALS || ''),
     'VITE_OPENAI_API_KEY': JSON.stringify(process.env.VITE_OPENAI_API_KEY || ''),
   },
 });
