@@ -5,4 +5,13 @@
   font-family: var(--text-regular-semi-bold);
   color: var(--mint-cream);
   text-align: left;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-base);
+}
+
+.thisistext {
+  width: 50%; /* Adjust the width as needed */
+  
 }

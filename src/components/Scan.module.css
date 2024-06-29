@@ -4,6 +4,7 @@
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
+  align-self:center;
 }
 .scan1 {
   position: relative;

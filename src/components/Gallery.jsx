@@ -2,7 +2,7 @@ import {useRef, useCallback } from "react";
 import PropTypes from "prop-types";
 import styles from "./Gallery.module.css";
 
-const Gallery = ({ className = '', noPhoto, onPhotoUpload }) => {
+const Gallery = ({ className = '', onPhotoUpload, showGallery }) => {
   const fileInputRef = useRef(null);
 
   const handleFileChange = useCallback(async (event) => {
@@ -14,27 +14,7 @@ const Gallery = ({ className = '', noPhoto, onPhotoUpload }) => {
       };
       reader.readAsDataURL(file);
     }
-    /*if (file) {
-      try {
-        const formData = new FormData();
-        formData.append('file', file);
-
-        const response = await fetch('/api/photoupload.js', {
-          method: 'POST',
-          body: formData,
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          onPhotoUpload(data.imageUrl); // Assuming server returns processed image URL
-        } else {
-          throw new Error('Failed to upload image');
-        }
-      } catch (error) {
-        console.error('Error uploading image:', error);
-        // Handle error
-      }
-    }*/
+  
   }, [onPhotoUpload]);
 
   const handleLabelClick = () => {
@@ -45,7 +25,7 @@ const Gallery = ({ className = '', noPhoto, onPhotoUpload }) => {
   };
 
   return (
-    noPhoto && (
+    showGallery && (
       <div className={[styles.gallery, className].join(" ")}>
         <label className={styles.label} onClick={handleLabelClick}>
           <div className={styles.imagewithtext}>
@@ -75,7 +55,7 @@ const Gallery = ({ className = '', noPhoto, onPhotoUpload }) => {
 
 Gallery.propTypes = {
   className: PropTypes.string,
-  noPhoto: PropTypes.bool.isRequired,
+  showGallery: PropTypes.bool,
   onPhotoUpload: PropTypes.func.isRequired,
 };
 

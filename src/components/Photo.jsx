@@ -36,13 +36,11 @@ function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
   );
 }
 
-export default function App({photoURL}) {
+export default function App({photoURL, updateSetImageButtonPressed, updatePressed, updatePressedTwice}) {
   const dispatch = useDispatch();
   const [imgSrc, setImgSrc] = useState(photoURL || defaultPhotoUrl);
   const previewCanvasRef = useRef(null);
   const imgRef = useRef(null);
-  const hiddenAnchorRef = useRef(null);
-  const blobUrlRef = useRef('');
   const [crop, setCrop] = useState();
   const [completedCrop, setCompletedCrop] = useState();
   const [scale, setScale] = useState(1);
@@ -67,6 +65,10 @@ export default function App({photoURL}) {
   }, [photoURL, aspect]);
 
   async function onSetImageClick() {
+
+    updateSetImageButtonPressed(true);
+    updatePressedTwice(false)
+    updatePressed(true)
 
     if (scale === 0) {
       console.log("Scale is 0, photo not dispatched.");

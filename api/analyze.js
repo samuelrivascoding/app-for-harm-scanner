@@ -1,6 +1,5 @@
 import vision from '@google-cloud/vision';
 import { GoogleAuth } from 'google-auth-library';
-import { Storage } from '@google-cloud/storage';
 
 
 // Initialize Google Vision API client
@@ -14,15 +13,6 @@ const credentials = {
 const auth = new GoogleAuth({ credentials });
 const client = new vision.ImageAnnotatorClient({ auth });
 
-const storage = new Storage({
-  projectId: process.env.GOOGLE_PROJECT_ID,
-  credentials: {
-    client_email: process.env.GOOGLE_CLIENT_EMAIL,
-    private_key: process.env.GOOGLE_PRIVATE_KEY,
-  }
-});
-
-const bucket = storage.bucket(process.env.GOOGLE_BUCKET);
 
 async function analyzeImage(base64Data) {
   try {
@@ -71,10 +61,11 @@ const analyze = async (req, res) => {
     
     console.log(" it worked!!!!")
     console.log('Text:')
+    const firstDescription = detections[0]?.description;
     detections.forEach(text => console.log(text.description));
     const allDescriptions = detections.map(text => text.description).join(' ');
 
-    res.status(200).json({ allDescriptions });
+    res.status(200).json({ firstDescription});
   } catch (error) {
     console.error('Error during text detection:', error);
     res.status(500).json({ error: 'Failed to process image: '+ error.message });

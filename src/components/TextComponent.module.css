@@ -3,10 +3,11 @@
   line-height: 140%;
 }
 .textComponent {
+  padding: 36px;
   align-self: stretch;
   background-color: var(--companycolor);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;

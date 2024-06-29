@@ -6,7 +6,7 @@ const TextComponent = ({ className = "", showTextComponent  }) => {
   return (
     !showTextComponent && (
       <div className={[styles.textComponent, className].join(" ")}>
-        <b className={styles.header}>{`Text Identified in the image: `}</b>
+        <b className={styles.header}>{`Highlight text for each entry to compare with data. Edit if text was inaccurate:`}</b>
         <TextIdentified/>
       </div>
     )

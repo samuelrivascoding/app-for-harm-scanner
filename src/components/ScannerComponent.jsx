@@ -9,13 +9,12 @@ import styles from "./ScannerComponent.module.css";
 import TextIdentified from "./TextIdentified.jsx"; // Import TextIdentified component
 import Photo from './Photo.jsx';
 
-const ScannerComponent = ({ className = "", notPressed, noPhoto, updatePressed, updatePhoto}) => {
+const ScannerComponent = ({ className = "", pressedTwice, notPressed, noPhotoUploaded, updatePressed, updatePhoto, updatePressedTwice}) => {
 
   const [capturedPhoto, setCapturedPhoto] = useState(null);
-  const [visionResult, setVisionResult] = useState({
-    extractedText: "Sample extracted text" // Replace with actual extracted text
-  });
   const [showCamera, setShowCamera] = useState(true); // State to toggle camera feed
+  const [ImageButtonPressed, SetImageButtonPressed] = useState(false);
+
   
   const handlePhotoCapture = useCallback((photoURL) => {
     setCapturedPhoto(photoURL);
@@ -44,14 +43,15 @@ const ScannerComponent = ({ className = "", notPressed, noPhoto, updatePressed, 
         {showCamera ? (
           <Camera />
         ) : (
-          <Photo photoURL={capturedPhoto} onCapture={(capturedPhoto) => setCapturedPhoto(capturedPhoto)} />
+          <Photo updatePressedTwice={updatePressedTwice} updateSetImageButtonPressed={SetImageButtonPressed} updatePressed={updatePressed} photoURL={capturedPhoto} onCapture={(capturedPhoto) => setCapturedPhoto(capturedPhoto)} />
         )}
         <div className={styles.buttonContainer}>
           <div className={styles.buttons}>
-            <Gallery noPhoto={noPhoto} onPhotoUpload={(photoURL) => handlePhotoUpload(photoURL, updatePressed)}  />
-            <TakePhoto noPhoto={noPhoto} onPhotoCapture={(photoURL) => handlePhotoCapture(photoURL, updatePressed)}  />
-            <Scan noPhoto={noPhoto} setVisionResult={setVisionResult} capturedPhoto={capturedPhoto} updatePressed={updatePressed}/>
-            <ChatGPT noPhoto={noPhoto} />
+            <Gallery showGallery={noPhotoUploaded} onPhotoUpload={(photoURL) => handlePhotoUpload(photoURL, updatePressed)}  />
+            <TakePhoto showTakePhoto={noPhotoUploaded} onPhotoCapture={(photoURL) => handlePhotoCapture(photoURL, updatePressed)}  />
+            <Scan showScan={ImageButtonPressed} capturedPhoto={capturedPhoto} updatePressed={updatePressed} updatePressedTwice={updatePressedTwice}
+            notPressed={notPressed}/>
+            <ChatGPT showChatGPT={pressedTwice} />
             
           </div>
         </div>
@@ -62,10 +62,11 @@ const ScannerComponent = ({ className = "", notPressed, noPhoto, updatePressed, 
 
 ScannerComponent.propTypes = {
   className: PropTypes.string,
+  noPhotoUploaded: PropTypes.bool.isRequired,
   notPressed: PropTypes.bool.isRequired,
-  updatePressed: PropTypes.func.isRequired, // updatePressed function as required prop
+  updatePressed: PropTypes.bool.isRequired,
+  updatePressedTwice: PropTypes.func.isRequired, 
   photoURL: PropTypes.string.isRequired,
-  setVisionResult: PropTypes.func.isRequired,
 };
 
 export default ScannerComponent;

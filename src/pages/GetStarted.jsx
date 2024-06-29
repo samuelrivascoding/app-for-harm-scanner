@@ -13,8 +13,8 @@ import { Provider } from "react-redux";
 const GetStarted = () => {
   const navigate = useNavigate();
   const [notPressed, setNotPressed] = useState(true);
-  const [noPhoto, setNoPhoto] = useState(true);
-  const [visionResult, setVisionResult] = useState(null);
+  const [pressedTwice, setPressedTwice] = useState(false);
+  const [noPhotoUploaded, setNoPhoto] = useState(true);
 
   const onCompanyLogoContainerClick = useCallback(() => {
     navigate("/home");
@@ -36,9 +36,9 @@ const GetStarted = () => {
     <div className={styles.getStarted}>
         <Provider store={store}>
       <Navbar onCompanyLogoContainerClick={onCompanyLogoContainerClick} />
-      <ScannerComponent notPressed={notPressed} noPhoto={noPhoto} updatePressed={setNotPressed} updatePhoto={setNoPhoto} visionResult={visionResult}  />
-      <TextComponent showTextComponent={notPressed} visionResult={visionResult}  />
-      <ListOfItems showListOfItems={notPressed} visionResult={visionResult}  />
+      <ScannerComponent notPressed={notPressed} pressedTwice={pressedTwice} noPhotoUploaded={noPhotoUploaded} updatePressed={setNotPressed} updatePressedTwice={setPressedTwice} updatePhoto={setNoPhoto}  />
+      <TextComponent showTextComponent={notPressed} />
+      <ListOfItems showListOfItems={pressedTwice} />
       <Footer
         onCompanyLogoContainerClick={onCompanyLogoContainer2Click}
         onGetStartedTextClick={onGetStartedTextClick}

@@ -2,10 +2,14 @@ import IngredientChatGPT from "./IngredientChatGPT";
 import IngredientText from "./IngredientText";
 import PropTypes from "prop-types";
 import styles from "./ListOfItems.module.css";
+import { useSelector } from 'react-redux';
 
 const ListOfItems = ({ className = "", showListOfItems }) => {
+
+  const isChatGPTPressed = useSelector((state) => state.photo.isChatGPTPressed);
+
   return (
-    !showListOfItems && (
+    showListOfItems && (
       <section className={[styles.listOfItems, className].join(" ")}>
         <div className={styles.list}>
           <div className={styles.listheader}>
@@ -17,6 +21,7 @@ const ListOfItems = ({ className = "", showListOfItems }) => {
             <IngredientText />
           </div>
         </div>
+        {isChatGPTPressed && (
         <div className={styles.list}>
           <div className={styles.listheader}>
             <h3 className={styles.header}>
@@ -27,6 +32,7 @@ const ListOfItems = ({ className = "", showListOfItems }) => {
             <IngredientChatGPT />
           </div>
         </div>
+        )}
       </section>
     )
   );

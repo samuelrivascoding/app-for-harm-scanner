@@ -3,26 +3,37 @@ import PropTypes from "prop-types";
 import styles from "./ChatGPT.module.css";
 import { lookupHealthInfo } from "../../api/ChatGPTScript.js"
 import { useDispatch, useSelector } from "react-redux";
-import { setHealthInfo } from './reducer'; // Adjust the import path as needed
+import { setHealthInfo, setChatGPTPressed,  } from './reducer'; // Adjust the import path as needed
+import { useState, useEffect  } from 'react';
 
-const ChatGPT = ({ className = "", noPhoto }) => {
+
+const ChatGPT = ({ className = "", showChatGPT }) => {
   const dispatch = useDispatch();
-  const visionResult = useSelector((state) => state.photo.visionResult);
+  const identifiedText = useSelector((state) => state.photo.highlightedText);
+  const [highlightedText, setHighlightedText ] = useState([]);
+
+  useEffect(() => {
+      setHighlightedText(identifiedText);
+  }, [identifiedText]);
+
 
   const onChatGPTClick = useCallback(async () => {
     try {
-      const result = await lookupHealthInfo(visionResult);
+      console.log(highlightedText);
+      const result = await lookupHealthInfo([highlightedText]);
+      console.log('onchatgptclick result recieved');
       dispatch(setHealthInfo(result));
+      dispatch(setChatGPTPressed(true));
     } catch (error) {
       console.error('Error during ChatGPT lookup:', error);
       // Optionally, dispatch an action to set an error state
     }
-  }, [dispatch, visionResult]);
+  }, [dispatch,  highlightedText, lookupHealthInfo, setHealthInfo, setChatGPTPressed]);
 
 
 
   return (
-    !noPhoto && (
+    showChatGPT && (
       <button
         className={[styles.chatgpt, className].join(" ")}
         onClick={onChatGPTClick}
@@ -45,7 +56,7 @@ const ChatGPT = ({ className = "", noPhoto }) => {
 
 ChatGPT.propTypes = {
   className: PropTypes.string,
-  noPhoto: PropTypes.bool,
+  showChatGPT: PropTypes.bool,
 };
 
 export default ChatGPT;

@@ -1,13 +1,11 @@
 import PropTypes from "prop-types";
 import styles from "./IngredientText.module.css";
-import { useSelector } from 'react-redux';
-import useExcelProcessing from './useExcelProcessing'; // Adjust the import path as needed
+import { useSelector  } from 'react-redux';
+
 
 const IngredientText = ({ className = ""}) => {
-  const textToCompare = useSelector((state) => {
-    return state.photo.visionResult.extractedText;
-  });
-  const { matchedRows } = useExcelProcessing(textToCompare);
+  const matchedRows = useSelector((state) => state.photo.matchedRows);
+
   
   return (
     <div className={[styles.ingredienttext, className].join(" ")}>
@@ -27,6 +25,8 @@ const IngredientText = ({ className = ""}) => {
     </div>
     </div>
   );
+ 
+
 };
 
 IngredientText.propTypes = {
@@ -34,17 +34,3 @@ IngredientText.propTypes = {
 };
 
 export default IngredientText;
-
-/*
-  const isProcessingComplete = useSelector((state) => state.photo.isProcessingComplete);
-  const [text, setText] = useState("");
-  const { matchedRows } = useExcelProcessing(text); // Using the custom hook
-
-  useEffect(() => {
-    if (isProcessingComplete) {
-      const textToCompare = useSelector((state) => state.photo.visionResult.extractedText);
-      setText(textToCompare);
-    }
-  }, [isProcessingComplete]);
-
-  */
