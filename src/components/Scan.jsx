@@ -39,7 +39,7 @@ const Scan = ({ className = "", updatePressed, showScan, notPressed, updatePress
     {
     try {/*
 
-      const response = await fetch('/api/analyze', {
+      const response = await fetch('/server/api/analyze', {
         mode: "cors",
         method: 'POST',
         body: JSON.stringify({ image: capturedPhoto }),

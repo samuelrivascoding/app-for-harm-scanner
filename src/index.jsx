@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
+import Chatbot from "./components/Chatbot";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import "./global.css";
@@ -11,6 +12,7 @@ const root = createRoot(container);
 root.render(
   <BrowserRouter>
     <App />
+    <Chatbot />
   </BrowserRouter>,
 );
 

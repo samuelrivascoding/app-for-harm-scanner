@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import PropTypes from "prop-types";
 import styles from "./ChatGPT.module.css";
-import { lookupHealthInfo } from "../../api/ChatGPTScript.js"
+import { lookupHealthInfo } from "../../server/api/ChatGPTScript.js"
 import { useDispatch, useSelector } from "react-redux";
 import { setHealthInfo, setChatGPTPressed,  } from './reducer'; // Adjust the import path as needed
 import { useState, useEffect  } from 'react';

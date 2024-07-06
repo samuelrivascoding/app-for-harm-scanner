@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState } from 'react';
+import React, {useCallback, useState } from 'react';
 import Camera from "./Camera";
 import Gallery from "./Gallery";
 import TakePhoto from "./TakePhoto";
@@ -6,7 +6,6 @@ import Scan from "./Scan";
 import ChatGPT from "./ChatGPT";
 import PropTypes from "prop-types";
 import styles from "./ScannerComponent.module.css";
-import TextIdentified from "./TextIdentified.jsx"; // Import TextIdentified component
 import Photo from './Photo.jsx';
 
 const ScannerComponent = ({ className = "", pressedTwice, notPressed, noPhotoUploaded, updatePressed, updatePhoto, updatePressedTwice}) => {

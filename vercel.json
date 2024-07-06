@@ -1,13 +1,8 @@
 {
   "version": 2,
   "builds": [
-
     {
-      "src": "api/photoupload.cjs",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "api/analyze.js",
+      "src": "server/api/analyze.js",
       "use": "@vercel/node"
     }
   ],
@@ -17,12 +12,12 @@
     {
       "src": "/api/photoupload",
       "methods": ["POST"],
-      "dest": "api/photoupload.cjs"
+      "dest": "server/api/photoupload.cjs"
     },
     {
       "src": "/api/analyze",
       "methods": ["POST"],
-      "dest": "api/analyze.js"
+      "dest": "server/api/analyze.js"
     }
   ]
 }

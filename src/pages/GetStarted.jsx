@@ -10,6 +10,7 @@ import store from '../components/store.js';
 import { Provider } from "react-redux";
 
 
+
 const GetStarted = () => {
   const navigate = useNavigate();
   const [notPressed, setNotPressed] = useState(true);
@@ -44,6 +45,8 @@ const GetStarted = () => {
         onGetStartedTextClick={onGetStartedTextClick}
         onLearnMoreTextClick={onLearnMoreTextClick}
       />
+      {pressedTwice && <AssistantModal />} {/* Render AssistantModal conditionally */}
+
         </Provider>
     </div>
   );
