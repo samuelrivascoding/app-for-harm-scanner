@@ -33,6 +33,8 @@ const Chatbot = () => {
   const handleSendChat = () => {
     if (!userMessage.trim()) return;
 
+    console.log("Sending user message:", userMessage); // Log the message here
+
     const updatedMessages = [
       ...chatMessages,
       { message: userMessage, type: "outgoing" },
@@ -51,25 +53,42 @@ const Chatbot = () => {
       generateResponse(userMessage);
     }, 1000);
   };
+/*   try {
+      const options = {
+        method: "POST",
+        body: JSON.stringify({
+          message: userMessage,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
+      const response = await fetch(
+        "https://react-chatbot-server.vercel.app",
+        options
+      ); */
   const generateResponse = async (userMessage) => {
+    console.log("Received user message:", userMessage); // Log inside generateResponse
     try {
-      const options = {
-        method: "POST",
-        body: JSON.stringify({
-          message: userMessage,
-        }),
+      const response = await fetch('/server/api/virtualassistant', {
+        mode: "cors",
+        method: 'POST',
+        body: JSON.stringify({ message: userMessage }),
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
+          'Accept': 'application/json' // Indicate expectation of JSON response
         },
-      };
-
-      const response = await fetch(
-        "https://react-chatbot-server.vercel.app",
-        options
-      );
-      const data = await response.text();
-      console.log(data);
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to fetch response");
+      }
+  
+      const responseData = await response.json();
+      const generatedText = responseData.text; // Access the text from the response object
+      
+      console.log(generatedText);
 
       // Delete the message "( Thinking... )" and add the response
       setChatMessages((prevMessages) =>
@@ -79,7 +98,7 @@ const Chatbot = () => {
       // Server response
       setChatMessages((prevMessages) => [
         ...prevMessages,
-        { message: data, type: "incoming" },
+        { message: generatedText, type: "incoming" },
       ]);
     } catch (error) {
       // Error message

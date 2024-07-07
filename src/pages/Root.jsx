@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Header from "../components/Header";
-import Layout from "../components/Layout";
+import Header from "../components/HeaderHome";
+import Layout from "../components/LayoutHome";
 import Footer from "../components/Footer";
 import styles from "./Root.module.css";
 

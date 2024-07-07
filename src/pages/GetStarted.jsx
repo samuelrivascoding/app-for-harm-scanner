@@ -45,8 +45,6 @@ const GetStarted = () => {
         onGetStartedTextClick={onGetStartedTextClick}
         onLearnMoreTextClick={onLearnMoreTextClick}
       />
-      {pressedTwice && <AssistantModal />} {/* Render AssistantModal conditionally */}
-
         </Provider>
     </div>
   );

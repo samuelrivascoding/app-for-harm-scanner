@@ -4,20 +4,29 @@
     {
       "src": "server/api/analyze.js",
       "use": "@vercel/node"
+    }, 
+    {
+      "src": "server/api/virtualassistant.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     { "handle": "filesystem" },
 
     {
-      "src": "/api/photoupload",
+      "src": "/server/api/photoupload",
       "methods": ["POST"],
       "dest": "server/api/photoupload.cjs"
     },
     {
-      "src": "/api/analyze",
+      "src": "/server/api/analyze",
       "methods": ["POST"],
       "dest": "server/api/analyze.js"
+    },
+    {
+      "src": "/server/api/virtualassistant",
+      "methods": ["POST"],
+      "dest": "server/api/virtualassistant.js"
     }
   ]
 }
