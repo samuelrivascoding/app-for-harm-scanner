@@ -37,7 +37,7 @@ const Scan = ({ className = "", updatePressed, showScan, notPressed, updatePress
 
   const processPhoto = async () => {
     {
-    try {/*
+    try {
 
       const response = await fetch('/server/api/analyze', {
         mode: "cors",
@@ -55,13 +55,11 @@ const Scan = ({ className = "", updatePressed, showScan, notPressed, updatePress
 
       const result = await response.json();
       const textDescriptions = result.allDescriptions;
-      replace setVision() with textDescriptions*/ 
-      dispatch(setVisionResult('textDescriptions'));
-      setText('textDescriptions'); // Update the text state with the extracted text
+      dispatch(setVisionResult(textDescriptions));
+      setText(textDescriptions); // Update the text state with the extracted text
       //console.log(text);
       dispatch(setProcessingComplete(true)); // Processing complete
-      const result = 0;
-      return result;
+      return textDescriptions;
 
     } catch (error) {
       console.error('Error during photo processing:', error);

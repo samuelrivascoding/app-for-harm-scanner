@@ -9,6 +9,7 @@ import { canvasPreview } from './canvasPreview';
 import { useDebounceEffect } from './useDebounceEffect';
 import styles from './Photo.module.css';
 import { setCroppedPhoto } from './reducer.js'; // Adjust the import path as needed
+import { Button, IconButton } from '@mui/material'; // Import Button and IconButton
 
 
 
@@ -43,7 +44,7 @@ export default function App({photoURL, updateSetImageButtonPressed, updatePresse
   const imgRef = useRef(null);
   const [crop, setCrop] = useState();
   const [completedCrop, setCompletedCrop] = useState();
-  const [scale, setScale] = useState(1);
+  const [scale, setScale1] = useState(1.0);
   const [rotate, setRotate] = useState(0);
   const [aspect, setAspect] = useState(16 / 9);
 
@@ -165,9 +166,11 @@ export default function App({photoURL, updateSetImageButtonPressed, updatePresse
           <input
             id="scale-input"
             type="number"
-            value={Number.isInteger(scale) ? scale : scale.toFixed(1)} // Format to 1 decimal place if not an integer
+            value={scale.toFixed(1)} // Format to 1 decimal place if not an integer
             disabled={!imgSrc}
-            onChange={(e) => setScale(Number(e.target.value))}
+            onChange={(e) => setScale1(Number(e.target.value))}
+            step="0.1" // Allow increments of 0.1
+            placeholder="Enter scale (e.g., 1.5)" // Placeholder text
           />
         </div>
         <div>
@@ -185,9 +188,9 @@ export default function App({photoURL, updateSetImageButtonPressed, updatePresse
           />
         </div>
         <div>
-          <button onClick={handleToggleAspectClick}>
+          <Button onClick={handleToggleAspectClick} variant="contained" color="primary">
             Toggle aspect {aspect ? 'off' : 'on'}
-          </button>
+          </Button>
         </div>
       </div>
       <ReactCrop
@@ -212,7 +215,7 @@ export default function App({photoURL, updateSetImageButtonPressed, updatePresse
             />
           </div>
           <div>
-            <button onClick={onSetImageClick}>Set Image to be scanned</button>
+            <Button  variant="contained" color="primary" onClick={onSetImageClick}>Set Image to be scanned</Button>
           </div>
         </>
       )}

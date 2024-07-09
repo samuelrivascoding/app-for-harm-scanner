@@ -3,7 +3,7 @@
   display: flex; /* Use flexbox */
   flex-direction: column; /* Arrange items vertically */
   align-items: center; /* Center items horizontally */
-  gap: 8px; /* Adds 3px gap between child elements */
+  gap: 24px; /* Adds 3px gap between child elements */
 }
 
 
@@ -36,7 +36,7 @@
 }
 
 .previewCanvas {
-  max-width: 100%;
+  max-width: 80%;
   max-height: 100%;
   display: block;
   margin: auto;

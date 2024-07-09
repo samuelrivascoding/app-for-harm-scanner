@@ -36,12 +36,6 @@ const Header = ({ className = "" }) => {
           </button>
         </div>
       </div>
-      <img
-        className={styles.squareIcon}
-        loading="lazy"
-        alt=""
-        src="/framesquare800x800@2x.png"
-      />
     </section>
   );
 };
