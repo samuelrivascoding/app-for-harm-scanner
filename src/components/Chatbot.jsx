@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import "../components/Chatbot.css";
+import fetch from 'isomorphic-fetch';
+
+
 
 const Chatbot = () => {
   const [userMessage, setUserMessage] = useState(""); // State to store user message
@@ -8,6 +11,20 @@ const Chatbot = () => {
   ]);
   const chatInputRef = useRef(null);
   const chatboxRef = useRef(null);
+
+
+  /*const isLocal = import.meta.env.VITE_VERCEL_URL === "local";
+  const vercelUrl = import.meta.env.VITE_VERCEL_URL
+  const domain = isLocal ? 'localhost:3000' : vercelUrl;
+  const protocol = isLocal ? 'http://' : 'https://';
+
+  const createUrl = (route) => {
+    const baseUrl = `${protocol}${domain}`;
+    return `${baseUrl}${route}`;
+  };
+
+  const url = createUrl('/api/virtualAssistant');*/
+  
 
   useEffect(() => {
     chatInputRef.current.style.height = "auto"; // Restore default height
@@ -53,36 +70,30 @@ const Chatbot = () => {
       generateResponse(userMessage);
     }, 1000);
   };
-/*   try {
-      const options = {
-        method: "POST",
-        body: JSON.stringify({
-          message: userMessage,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
 
-      const response = await fetch(
-        "https://react-chatbot-server.vercel.app",
-        options
-      ); */
   const generateResponse = async (userMessage) => {
     console.log("Received user message:", userMessage); // Log inside generateResponse
+    
+    //console.log(url)
+
     try {
-      const response = await fetch('/api/virtualassistant', {
-        mode: "cors",
+
+      
+      const myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      myHeaders.append('Accept', 'application/json');
+
+      const response = await fetch('/api/virtualAssistant', {
         method: 'POST',
+        headers: myHeaders,
         body: JSON.stringify({ message: userMessage }),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json' // Indicate expectation of JSON response
-        },
+        redirect: "follow"
       });
+
+      console.log(response.status)
   
       if (!response.ok) {
-        throw new Error("Failed to fetch response");
+        throw new Error('Failed to fetch response. Request failed with status ${response.status}');
       }
   
       const responseData = await response.json();

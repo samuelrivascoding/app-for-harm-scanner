@@ -4,6 +4,8 @@ import styles from "./Scan.module.css";
 import { useSelector, useDispatch } from 'react-redux';
 import { setVisionResult, setProcessingComplete, setCompareButtonPressed, setMatchedRows } from './reducer.js'; // Adjust the import path as needed
 import useExcelProcessing from './useExcelProcessing'; // Adjust the import path as needed
+import fetch from 'isomorphic-fetch';
+
 
 const Scan = ({ className = "", updatePressed, showScan, notPressed, updatePressedTwice}) => {
   const dispatch = useDispatch();
@@ -12,6 +14,16 @@ const Scan = ({ className = "", updatePressed, showScan, notPressed, updatePress
   const [lastProcessed, setLastProcessed] = useState(0); // Timestamp of the last process
   const textToCompare = useSelector((state) => state.photo.highlightedText);
   const [message, setMessage] = useState('');
+
+  /*const isLocal = import.meta.env.VITE_VERCEL_URL === "local";
+  const vercelUrl = import.meta.env.VITE_VERCEL_URL
+  const domain = isLocal ? 'localhost:3000' : vercelUrl.slice(0, vercelUrl.lastIndexOf('/'));
+  const protocol = isLocal ? 'http://' : 'https://';
+
+  const createUrl = (route) => {
+    const baseUrl = `${protocol}${domain}`;
+    return `${baseUrl}${route}`;
+  };*/
 
   useEffect(() => {
     console.log("highlighted lists:", textToCompare);
@@ -36,17 +48,20 @@ const Scan = ({ className = "", updatePressed, showScan, notPressed, updatePress
 
 
   const processPhoto = async () => {
-    {
+
     try {
+      const myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      myHeaders.append('Accept', 'application/json');
+
+      //const url = createUrl('/api/analyze');
 
       const response = await fetch('/api/analyze', {
-        mode: "cors",
         method: 'POST',
+        headers: myHeaders,
         body: JSON.stringify({ image: capturedPhoto }),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json' // Indicate expectation of JSON response
-        },
+        redirect: "follow",
+
       });
 
       if (!response.ok) {
@@ -70,7 +85,6 @@ const Scan = ({ className = "", updatePressed, showScan, notPressed, updatePress
       return defaultResult;
     }
   
-  }
   };
 
 
