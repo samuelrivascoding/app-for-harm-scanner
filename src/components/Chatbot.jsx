@@ -71,7 +71,7 @@ const Chatbot = () => {
   const generateResponse = async (userMessage) => {
     console.log("Received user message:", userMessage); // Log inside generateResponse
     try {
-      const response = await fetch('/server/api/virtualassistant', {
+      const response = await fetch('/api/virtualassistant', {
         mode: "cors",
         method: 'POST',
         body: JSON.stringify({ message: userMessage }),
