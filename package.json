@@ -2,6 +2,7 @@
   "name": "appbirthdefects",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@assistant-ui/react": "^0.2.4",
     "@emotion/react": "^11.11.4",
