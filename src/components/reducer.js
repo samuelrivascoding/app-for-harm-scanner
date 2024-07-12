@@ -7,7 +7,7 @@ const initialState = {
   column2: [],
   keywords: [],
   matchedRows: [],
-  healthInfo: '',
+  healthInfo: [],
   isProcessingComplete: false,
   highlightedText: '', // Initially store an empty string
   isChatGPTPressed: false,

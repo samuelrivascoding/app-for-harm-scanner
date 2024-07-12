@@ -3,6 +3,8 @@ import styles from "./TextIdentified.module.css";
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch  } from 'react-redux';
 import { setHighlightedText } from './reducer.js'; // Adjust path as needed
+import { Button, IconButton } from '@mui/material'; // Import Button and IconButton
+
 
 
 
@@ -26,19 +28,19 @@ const TextIdentified = ({ className = "" }) => {
 
   const handleHighlight = () => {
     const selection = window.getSelection();
-    const selectedText = selection.toString().trim();
+    const selectedText = selection.toString().trim().slice(0, 50);
 
     if (selectedText) {
       setHighlightedTexts(prev => {
         if (prev.some(textObj => textObj.text === selectedText)) {
           // If text is already highlighted, remove it
           const newHighlights = prev.filter(textObj => textObj.text !== selectedText);
-          dispatch(setHighlightedText(newHighlights.map(obj => obj.text).join(' ')));
+          dispatch(setHighlightedText(newHighlights.map(obj => obj.text).join(',')));
           return newHighlights;
         } else {
           // If text is not highlighted, add it
           const newHighlights = [...prev, { text: selectedText }];
-          dispatch(setHighlightedText(newHighlights.map(obj => obj.text).join(' ')));
+          dispatch(setHighlightedText(newHighlights.map(obj => obj.text).join(',')));
           return newHighlights;
         }
       });
@@ -49,7 +51,7 @@ const TextIdentified = ({ className = "" }) => {
     setHighlightedTexts(prev => {
       const updatedHighlights = [...prev];
       updatedHighlights[index].text = newText;
-      dispatch(setHighlightedText(updatedHighlights.map(obj => obj.text).join(', ')));
+      dispatch(setHighlightedText(updatedHighlights.map(obj => obj.text).join(',')));
       return updatedHighlights;
     });
   };
@@ -62,7 +64,7 @@ const TextIdentified = ({ className = "" }) => {
   const getHighlightedText = (text, highlights) => {
     if (!highlights.length) return text;
 
-    let parts = text.split(new RegExp(`(${highlights.map(obj => obj.text).join('|')})`, 'gi'));
+    let parts = text.split(new RegExp(`(${highlights.map(obj => obj.text.slice(0, 50)).join('|')})`, 'gi'));
     return parts.map((part, index) =>
       highlights.some(obj => obj.text === part) ? <mark key={index}>{part}</mark> : part
     );
@@ -87,7 +89,7 @@ const TextIdentified = ({ className = "" }) => {
           ))}
         </ul>
       </div>
-      <button onClick={handleClearHighlights}>Clear Highlights</button>
+      <Button variant="contained" color="primary" onClick={handleClearHighlights}>Clear Highlights</Button>
     </div>
     
 

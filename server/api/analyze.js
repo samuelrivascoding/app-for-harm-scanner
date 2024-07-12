@@ -65,7 +65,7 @@ const analyze = async (req, res) => {
     detections.forEach(text => console.log(text.description));
     const allDescriptions = detections.map(text => text.description).join(' ');
 
-    res.status(200).json({ firstDescription});
+    res.status(200).json({ allDescriptions});
   } catch (error) {
     console.error('Error during text detection:', error);
     res.status(500).json({ error: 'Failed to process image: '+ error.message });

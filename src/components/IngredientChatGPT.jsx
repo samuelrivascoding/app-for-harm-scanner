@@ -4,21 +4,18 @@ import { useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 
 const IngredientChatGPT = ({ className = "" }) => {
+  const healthInfoList = useSelector((state) => state.photo.healthInfo);
+  const [text, setText] = useState([]); // Array to store health info
 
-  const healthInfoList = useSelector((state) => {
-    return state.photo.healthInfo;
-  });
-  const [text, setText] = useState([]); // Now stores an array of health info
 
+  // Update text based on healthInfoList or error condition
   useEffect(() => {
     if (healthInfoList && healthInfoList.length > 0) {
-      setText(healthInfoList); // Update state with the entire list
-      console.log('healthinfolist set' + " text")
-
+      setText(healthInfoList);
     } else {
-      setText(["Bad ChatGPT Response"]); // Default case for empty list
-      console.log('no text is identified')
+      setText(["Bad ChatGPT Response. Make sure you choose less than three items or try again later."])
     }
+
   }, [healthInfoList]);
 
   return (

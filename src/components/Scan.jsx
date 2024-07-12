@@ -57,7 +57,7 @@ const Scan = ({ className = "", updatePressed, showScan, notPressed, updatePress
       const textDescriptions = result.allDescriptions;
       dispatch(setVisionResult(textDescriptions));
       setText(textDescriptions); // Update the text state with the extracted text
-      //console.log(text);
+      console.log(text);
       dispatch(setProcessingComplete(true)); // Processing complete
       return textDescriptions;
 
