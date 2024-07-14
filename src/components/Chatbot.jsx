@@ -83,7 +83,7 @@ const Chatbot = () => {
       myHeaders.append('Content-Type', 'application/json');
       myHeaders.append('Accept', 'application/json');
 
-      const response = await fetch('/api/virtualAssistant', {
+      const response = await fetch('/api/virtualassistant', {
         method: 'POST',
         headers: myHeaders,
         body: JSON.stringify({ message: userMessage }),
