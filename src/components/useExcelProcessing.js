@@ -1,7 +1,7 @@
 import * as XLSX from 'xlsx';
 
 const useExcelProcessing = async (textToCompare) => {
-  const excelFileURL = '/Book%201.xlsx'; // Adjust relative path as needed
+  const excelFileURL = '/excelHarm.xlsx'; // Adjust relative path as needed
 
   try {
     const response = await fetch(excelFileURL);
@@ -22,7 +22,7 @@ const useExcelProcessing = async (textToCompare) => {
             const cellValue2 = worksheet[XLSX.utils.encode_cell({ r: R, c: 1 })];
 
             if (cellValue1 && cellValue2) {
-              const keywords = cellValue1.v.split(",").map((keyword) => keyword.trim());
+              const keywords = cellValue1.v.split(",").map((keyword) => keyword.trim().toLowerCase());
               const data = cellValue2.v;
               rowData.push({ keywords, data });
             }
@@ -33,7 +33,7 @@ const useExcelProcessing = async (textToCompare) => {
           rowData.forEach((row) => {
             const { keywords, data } = row;
             
-            if (keywords.some(keyword => textToCompare.some(text => keyword.trim().toLowerCase() === text.toLowerCase()))) {
+            if (keywords.some(keyword => textToCompare.some((text) => keyword.includes(text.trim().toLowerCase())))) {
               matchedRows.push({ keywords, data });
               console.log("Keyword matches:", keywords);
             }

@@ -6,7 +6,20 @@ const Camera = ({ className = '' }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    const constraints = { video: true };
+    let constraints = { 
+      video: {
+        facingMode: 'user' // Default to user-facing camera
+      } 
+    };
+
+    // Check if we're on a mobile device
+    if (navigator.userAgent.match(/Android|iPhone|iPad|iPod/i)) {
+      constraints = { 
+        video: {
+          facingMode: { exact: "environment" } // Use rear-facing camera on mobile
+        } 
+      };
+    }
 
     navigator.mediaDevices
       .getUserMedia(constraints)

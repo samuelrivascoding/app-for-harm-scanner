@@ -63,9 +63,8 @@ ScannerComponent.propTypes = {
   className: PropTypes.string,
   noPhotoUploaded: PropTypes.bool.isRequired,
   notPressed: PropTypes.bool.isRequired,
-  updatePressed: PropTypes.bool.isRequired,
+  updatePressed: PropTypes.func.isRequired,
   updatePressedTwice: PropTypes.func.isRequired, 
-  photoURL: PropTypes.string.isRequired,
 };
 
 export default ScannerComponent;
