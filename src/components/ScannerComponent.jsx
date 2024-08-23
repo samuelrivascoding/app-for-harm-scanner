@@ -1,4 +1,4 @@
-import React, {useCallback, useState } from 'react';
+import React, {useCallback, useState, useRef } from 'react';
 import Camera from "./Camera";
 import Gallery from "./Gallery";
 import TakePhoto from "./TakePhoto";
@@ -13,6 +13,8 @@ const ScannerComponent = ({ className = "", pressedTwice, notPressed, noPhotoUpl
   const [capturedPhoto, setCapturedPhoto] = useState(null);
   const [showCamera, setShowCamera] = useState(true); // State to toggle camera feed
   const [ImageButtonPressed, SetImageButtonPressed] = useState(false);
+  const webcamRef = useRef(null);
+
 
   
   const handlePhotoCapture = useCallback((photoURL) => {
@@ -40,14 +42,14 @@ const ScannerComponent = ({ className = "", pressedTwice, notPressed, noPhotoUpl
     <section className={[styles.scannerComponent, className].join(' ')}>
       <div className={styles.scanner}>
         {showCamera ? (
-          <Camera />
+          <Camera webcamRef={webcamRef}/>
         ) : (
           <Photo updatePressedTwice={updatePressedTwice} updateSetImageButtonPressed={SetImageButtonPressed} updatePressed={updatePressed} photoURL={capturedPhoto} onCapture={(capturedPhoto) => setCapturedPhoto(capturedPhoto)} />
         )}
         <div className={styles.buttonContainer}>
           <div className={styles.buttons}>
-            <Gallery showGallery={noPhotoUploaded} onPhotoUpload={(photoURL) => handlePhotoUpload(photoURL, updatePressed)}  />
-            <TakePhoto showTakePhoto={noPhotoUploaded} onPhotoCapture={(photoURL) => handlePhotoCapture(photoURL, updatePressed)}  />
+            <Gallery showGallery={noPhotoUploaded} onPhotoUpload={(photoURL) => handlePhotoUpload(photoURL, updatePressed)} />
+            <TakePhoto showTakePhoto={noPhotoUploaded} onPhotoCapture={(photoURL) => handlePhotoCapture(photoURL, updatePressed)} webcamRef={webcamRef} />
             <Scan showScan={ImageButtonPressed} capturedPhoto={capturedPhoto} updatePressed={updatePressed} updatePressedTwice={updatePressedTwice}
             notPressed={notPressed}/>
             <ChatGPT showChatGPT={pressedTwice} />

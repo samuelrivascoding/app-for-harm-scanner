@@ -1,51 +1,43 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from "prop-types";
 import styles from "./Camera.module.css";
+import Webcam from "react-webcam";
 
-const Camera = ({ className = '' }) => {
-  const videoRef = useRef(null);
+
+const Camera = ({ className = '' , webcamRef}) => {
+
+  const [videoConstraints, setVideoConstraints] = useState({
+    width: 1280,
+    height: 720,
+    facingMode: "user"
+  });
 
   useEffect(() => {
-    let constraints = { 
-      video: {
-        facingMode: 'user' // Default to user-facing camera
-      } 
-    };
-
-    // Check if we're on a mobile device
-    if (navigator.userAgent.match(/Android|iPhone|iPad|iPod/i)) {
-      constraints = { 
-        video: {
-          facingMode: { exact: "environment" } // Use rear-facing camera on mobile
-        } 
-      };
-    }
-
-    navigator.mediaDevices
-      .getUserMedia(constraints)
-      .then((stream) => {
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-        }
-      })
-      .catch((error) => {
-        console.error('Error accessing camera:', error);
-      });
-
-    return () => {
-      if (videoRef.current) {
-        const stream = videoRef.current.srcObject;
-        if (stream) {
-          const tracks = stream.getTracks();
-          tracks.forEach((track) => track.stop());
-        }
+    const detectDevice = () => {
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      
+      if (isIOS) {
+        setVideoConstraints(prevConstraints => ({
+          ...prevConstraints,
+          facingMode: { exact: "environment" }
+        }));
       }
     };
+
+    detectDevice();
   }, []);
+
 
   return (
     <div className={[styles.camera, className].join(' ')}>
-      <video className={styles.cameraChild} ref={videoRef} autoPlay playsInline muted />
+        <Webcam
+        className={styles.cameraChild}
+        audio={false}
+        ref={webcamRef}
+        screenshotFormat="image/jpeg"
+        videoConstraints={videoConstraints}
+        onError={(error) => console.log(error)}
+      />
     </div>
   );
 };

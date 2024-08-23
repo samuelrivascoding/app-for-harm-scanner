@@ -43,6 +43,7 @@ const Gallery = ({ className = '', onPhotoUpload, showGallery }) => {
               id="file-upload"
               className={styles.input}
               onChange={handleFileChange}
+              capture="environment"
               style={{ display: "none" }}
             />
             <div className={styles.gallery1}>Gallery</div>

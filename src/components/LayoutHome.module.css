@@ -21,6 +21,8 @@
   position: relative;
   font-size: var(--text-regular-semi-bold-size);
   line-height: 150%;
+  height: 100%;
+
 }
 .tabHorizontal {
   align-self: stretch;
@@ -42,6 +44,7 @@
   justify-content: flex-start;
   padding: 0px 0px 0px var(--padding-13xl);
   gap: var(--gap-base);
+  height: 100%;
 }
 .heading2 {
   align-self: stretch;
@@ -51,7 +54,7 @@
 }
 .tabHorizontal2 {
   align-self: stretch;
-  height: 106px;
+  height: 100%;
   overflow: hidden;
   display: flex;
   flex-direction: column;

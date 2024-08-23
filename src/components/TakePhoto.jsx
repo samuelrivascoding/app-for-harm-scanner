@@ -1,24 +1,27 @@
-import { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import PropTypes from "prop-types";
 import styles from "./TakePhoto.module.css";
+import Webcam from "react-webcam";
 
-const TakePhoto = ({ className = "", showTakePhoto, onPhotoCapture  }) => {
+const videoConstraints = {
+  width: 1280,
+  height: 720,
+  facingMode: "user"
+};
+
+
+const TakePhoto = ({ className = "", showTakePhoto, onPhotoCapture, webcamRef  }) => {
+  
   const capturePhoto = useCallback(() => {
-    //TODO: capture photo, then once photo is uploaded and processed, hide and switch to new buttons
-    const canvas = document.createElement('canvas');
-    const video = document.querySelector('video');
 
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+    const image = webcamRef.current.getScreenshot();
+    onPhotoCapture(image); // Pass captured photo URL to parent component
 
-    const photoURL = canvas.toDataURL('image/jpeg');
-    onPhotoCapture(photoURL); // Pass captured photo URL to parent component
-
-  }, [onPhotoCapture]);
+  }, [onPhotoCapture, webcamRef]);
 
   return (
     showTakePhoto && (
+      <div>
       <button
         className={[styles.takephoto, className].join(" ")}
         onClick={capturePhoto}
@@ -30,6 +33,7 @@ const TakePhoto = ({ className = "", showTakePhoto, onPhotoCapture  }) => {
           src="/frame-1.svg"
         />
       </button>
+      </div>
     )
   );
 };
