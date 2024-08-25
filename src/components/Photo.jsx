@@ -10,6 +10,9 @@ import { useDebounceEffect } from './useDebounceEffect';
 import styles from './Photo.module.css';
 import { setCroppedPhoto } from './reducer.js'; // Adjust the import path as needed
 import { Button, IconButton } from '@mui/material'; // Import Button and IconButton
+import { NumericFormat } from 'react-number-format';
+
+
 
 
 
@@ -163,28 +166,43 @@ export default function App({photoURL, updateSetImageButtonPressed, updatePresse
       <div className={styles.CropControls}>
         <div>
           <label htmlFor="scale-input" style={{color: 'white'}}>Scale: </label>
-          <input
+          <NumericFormat
             id="scale-input"
-            type="number"
-            value={scale.toFixed(1)} // Format to 1 decimal place if not an integer
+            value={scale}
+            onValueChange={(values) => {
+              const { floatValue } = values;
+              setScale1(floatValue || 1); // Default to 1 if input is cleared
+            }}
+            decimalScale={1}
+            fixedDecimalScale
+            allowNegative={false}
+            isAllowed={(values) => {
+              const { floatValue } = values;
+              return floatValue === undefined || (floatValue >= 0.1 && floatValue <= 3);
+            }}
             disabled={!imgSrc}
-            onChange={(e) => setScale1(Number(e.target.value))}
-            step="0.1" // Allow increments of 0.1
-            placeholder="Enter scale (e.g., 1.5)" // Placeholder text
+            placeholder="Enter scale (e.g., 1.5)"
+            style={{ width: '100px' }}
           />
         </div>
         <div>
           <label htmlFor="rotate-input" style={{color: 'white'}}>Rotate: </label>
-          <input
+          <NumericFormat
             id="rotate-input"
-            type="number"
             value={rotate}
+            onValueChange={(values) => {
+              const { floatValue } = values;
+              setRotate(floatValue || 0);
+            }}
+            decimalScale={0}
+            allowNegative={true}
+            isAllowed={(values) => {
+              const { floatValue } = values;
+              return floatValue === undefined || (floatValue >= -180 && floatValue <= 180);
+            }}
             disabled={!imgSrc}
-            onChange={(e) =>
-              setRotate(
-                Math.min(180, Math.max(-180, Number(e.target.value)))
-              )
-            }
+            placeholder="Enter rotation (-180 to 180)"
+            style={{ width: '100px' }}
           />
         </div>
         <div>

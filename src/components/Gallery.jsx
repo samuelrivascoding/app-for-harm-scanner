@@ -5,7 +5,7 @@ import styles from "./Gallery.module.css";
 const Gallery = ({ className = '', onPhotoUpload, showGallery }) => {
   const fileInputRef = useRef(null);
 
-  const handleFileChange = useCallback(async (event) => {
+  const handleFileChange = useCallback( (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -17,17 +17,11 @@ const Gallery = ({ className = '', onPhotoUpload, showGallery }) => {
   
   }, [onPhotoUpload]);
 
-  const handleLabelClick = () => {
-    event.preventDefault(); // Prevent default label behavior
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
 
   return (
     showGallery && (
       <div className={[styles.gallery, className].join(" ")}>
-        <label className={styles.label} onClick={handleLabelClick}>
+        <label className={styles.label}>
           <div className={styles.imagewithtext}>
             <div className={styles.optionIcon}>
               <img
@@ -43,7 +37,7 @@ const Gallery = ({ className = '', onPhotoUpload, showGallery }) => {
               id="file-upload"
               className={styles.input}
               onChange={handleFileChange}
-              capture="environment"
+              accept="image/*"
               style={{ display: "none" }}
             />
             <div className={styles.gallery1}>Gallery</div>

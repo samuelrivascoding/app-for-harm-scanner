@@ -41,3 +41,39 @@
   display: block;
   margin: auto;
 }
+
+.horizontal-slider {
+  width: 100%;
+  max-width: 500px;
+  height: 50px;
+  margin: 20px 0;
+}
+
+.track {
+  top: 20px;
+  height: 10px;
+  background: #ddd;
+}
+
+.track.track-0 {
+  background: #5db7de;
+}
+
+.thumb {
+  top: 12px;
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  background-color: #5db7de;
+  color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.thumb:hover {
+  box-shadow: 0 0 0 8px #5db7de50;
+}
+
+.thumb.active {
+  background-color: #4a90e2;
+}
