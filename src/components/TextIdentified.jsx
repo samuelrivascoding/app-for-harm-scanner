@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import styles from "./TextIdentified.module.css";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef  } from 'react';
 import { useSelector, useDispatch  } from 'react-redux';
 import { setHighlightedText } from './reducer.js'; // Adjust path as needed
 import { Button, IconButton } from '@mui/material'; // Import Button and IconButton
@@ -16,6 +16,8 @@ const TextIdentified = ({ className = "" }) => {
   const isProcessingComplete = useSelector((state) => state.photo.isProcessingComplete);
   const [ThisIstext, setText] = useState("No text is identified. Choose a different photo.");
   const [highlightedTexts, setHighlightedTexts] = useState([]); // Maintain a list of highlighted texts
+  const textRef = useRef(null);
+
 
 
   useEffect(() => {
@@ -47,9 +49,35 @@ const TextIdentified = ({ className = "" }) => {
     }
   };
 
+  const touchTimer = useRef(null);
+  const touchStartPos = useRef({ x: 0, y: 0 });
+
+  const handleTouchStart = (e) => {
+    const touch = e.touches[0];
+    touchStartPos.current = { x: touch.clientX, y: touch.clientY };
+    touchTimer.current = setTimeout(() => {
+      // This will be called after 300ms if the touch hasn't ended
+      document.getSelection().removeAllRanges();
+    }, 300);
+  };
+
+  const handleTouchMove = (e) => {
+    const touch = e.touches[0];
+    const moveX = Math.abs(touch.clientX - touchStartPos.current.x);
+    const moveY = Math.abs(touch.clientY - touchStartPos.current.y);
+    
+    // If the user has moved their finger more than 10 pixels, assume they're scrolling
+    if (moveX > 10 || moveY > 10) {
+      clearTimeout(touchTimer.current);
+    }
+  };
+
   const handleTouchEnd = (e) => {
-    e.preventDefault();
-    handleHighlight();
+    e.preventDefault(); // Prevents zooming on double-tap on iOS
+    clearTimeout(touchTimer.current);
+    setTimeout(() => {
+      handleHighlight();
+    }, 50);
   };
 
   const handleEditHighlight = (index, newText) => {
@@ -79,10 +107,14 @@ const TextIdentified = ({ className = "" }) => {
   return (
     <div className={[styles.textidentified, className].join(" ")}>
       <div className={[styles.thisistext, className].join(" ")} 
+      ref={textRef}
       onMouseUp={handleHighlight}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       >
         {getHighlightedText(ThisIstext, highlightedTexts)}
+        
         
       </div>
       <div>
