@@ -47,6 +47,11 @@ const TextIdentified = ({ className = "" }) => {
     }
   };
 
+  const handleTouchEnd = (e) => {
+    e.preventDefault();
+    handleHighlight();
+  };
+
   const handleEditHighlight = (index, newText) => {
     setHighlightedTexts(prev => {
       const updatedHighlights = [...prev];
@@ -73,8 +78,12 @@ const TextIdentified = ({ className = "" }) => {
 
   return (
     <div className={[styles.textidentified, className].join(" ")}>
-      <div className={[styles.thisistext, className].join(" ")} onMouseUp={handleHighlight}>
+      <div className={[styles.thisistext, className].join(" ")} 
+      onMouseUp={handleHighlight}
+      onTouchEnd={handleTouchEnd}
+      >
         {getHighlightedText(ThisIstext, highlightedTexts)}
+        
       </div>
       <div>
       <ul>
