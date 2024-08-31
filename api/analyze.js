@@ -24,7 +24,7 @@ async function analyzeImage(base64Data) {
     return result.textAnnotations;
   } catch (error) {
     console.error('Error during image processing:', error);
-    throw error; // Re-throw for handling in the main function
+    throw error; // re-throw for handling in the main function
   }
 }
 
@@ -54,7 +54,7 @@ const analyze = async (req, res) => {
 
     const base64Data = image.split(',')[1];
     const detections = await analyzeImage(base64Data);
-    console.log(detections.length); // Check if detections array is empty
+    console.log(detections.length); // check if detections array is empty
     console.log(detections);
     
     console.log(" it worked!!!!")
